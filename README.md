@@ -1,0 +1,2 @@
+# HolocaSimulator
+ Hololive TCG Simulator
