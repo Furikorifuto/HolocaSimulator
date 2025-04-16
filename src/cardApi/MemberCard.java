@@ -1,6 +1,5 @@
 package cardApi;
 
-import org.jetbrains.annotations.NotNull;
 
 public class MemberCard extends BaseCard{
     EnumMember enumMember;
@@ -9,28 +8,28 @@ public class MemberCard extends BaseCard{
     int cardLimit;
     boolean buzzFlag;
 
-    public MemberCard(@NotNull EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health, boolean buzz, int limit) {
+    public MemberCard( EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health, boolean buzz, int limit) {
         super(member.toString(), type, recorded,w,g,r,b,y,p);
         this.setEnumMember(member);
         this.setMaxHealth(health);
         this.setCardLimit(limit);
         this.setBuzzFlag(buzz);
     }
-    public MemberCard(@NotNull EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health, boolean buzz) {
+    public MemberCard( EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health, boolean buzz) {
         super(member.toString(), type, recorded,w,g,r,b,y,p);
         this.setEnumMember(member);
         this.setMaxHealth(health);
         this.setCardLimit(4);
         this.setBuzzFlag(buzz);
     }
-    public MemberCard(@NotNull EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health, int limit) {
+    public MemberCard( EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health, int limit) {
         super(member.toString(), type, recorded,w,g,r,b,y,p);
         this.setEnumMember(member);
         this.setMaxHealth(health);
         this.setCardLimit(limit);
         this.setBuzzFlag(false);
     }
-    public MemberCard(@NotNull EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health) {
+    public MemberCard( EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health) {
         super(member.toString(), type, recorded,w,g,r,b,y,p);
         this.setEnumMember(member);
         this.setMaxHealth(health);
