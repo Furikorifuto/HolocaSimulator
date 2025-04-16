@@ -8,7 +8,6 @@ public class LeaderCard extends BaseCard{
         super(member.toString(),EnumCardType.Leader,recorded,w,g,r,b,y,p);
         this.setEnumMember(member);
         this.setMaxHealth(health);
-
     }
     public int getMaxHealth(){
         return this.maxHealth;
