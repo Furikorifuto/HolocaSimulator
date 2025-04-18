@@ -2,35 +2,35 @@ package cardApi;
 
 
 public class MemberCard extends BaseCard{
-    EnumMember enumMember;
-    int maxHealth;
-    int nowHealth;
-    int cardLimit;
-    boolean buzzFlag;
+    public EnumMember enumMember;
+    public int maxHealth;
+    public int nowHealth;
+    public int cardLimit;
+    public boolean buzzFlag;
 
-    public MemberCard( EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health, boolean buzz, int limit) {
-        super(member.toString(), type, recorded,w,g,r,b,y,p);
+    public MemberCard( EnumMember member, EnumRecorded recorded, EnumColor color, EnumCardType type, int health, boolean buzz, int limit) {
+        super(member.toString(), type, recorded,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
         this.setCardLimit(limit);
         this.setBuzzFlag(buzz);
     }
-    public MemberCard( EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health, boolean buzz) {
-        super(member.toString(), type, recorded,w,g,r,b,y,p);
+    public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health, boolean buzz) {
+        super(member.toString(), type, recorded,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
         this.setCardLimit(4);
         this.setBuzzFlag(buzz);
     }
-    public MemberCard( EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health, int limit) {
-        super(member.toString(), type, recorded,w,g,r,b,y,p);
+    public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health, int limit) {
+        super(member.toString(), type, recorded,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
         this.setCardLimit(limit);
         this.setBuzzFlag(false);
     }
-    public MemberCard( EnumMember member, EnumRecorded recorded, boolean w, boolean g, boolean r, boolean b, boolean y, boolean p, EnumCardType type, int health) {
-        super(member.toString(), type, recorded,w,g,r,b,y,p);
+    public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health) {
+        super(member.toString(), type, recorded,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
         this.setCardLimit(4);

@@ -1,8 +1,7 @@
 package cardApi;
 
 public enum EnumRecorded {
-    StartYellSet,
-    SoraAzki,
+    StartDeck,
     BloomingRadiance,
     QuintetSpectrum,
     EliteSpark,
