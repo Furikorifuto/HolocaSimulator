@@ -4,8 +4,8 @@ package cardApi;
 public class LeaderCard extends BaseCard{
     public int maxHealth;
     public EnumMember enumMember;
-    public LeaderCard(EnumMember member,EnumRecorded recorded,boolean w,boolean g,boolean r,boolean b,boolean y,boolean p,int health) {
-        super(member.toString(),EnumCardType.Leader,recorded,w,g,r,b,y,p);
+    public LeaderCard(EnumMember member,EnumRecorded recorded,EnumColor color,int health) {
+        super(member.toString(),EnumCardType.Leader,recorded,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
     }

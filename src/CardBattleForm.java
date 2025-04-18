@@ -1,8 +1,14 @@
 
 
+import netscape.javascript.JSException;
+import netscape.javascript.JSObject;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CardBattleForm extends JFrame {
     public JPanel panelStatus1P = new JPanel(null);
@@ -284,6 +290,12 @@ public class CardBattleForm extends JFrame {
         panelOption.setBounds(470,285,150,150);
         panelOption.add(buttonOption);
         this.add(panelOption);
+
+        buttonOption.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
         this.add(panel);
         this.setLocationRelativeTo(null);
