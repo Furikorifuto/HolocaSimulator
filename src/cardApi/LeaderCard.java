@@ -2,8 +2,9 @@ package cardApi;
 //推しカードの親クラス
 //最大体力を設定する
 public class LeaderCard extends BaseCard{
-    public int maxHealth;
-    public EnumMember enumMember;
+    private int maxHealth;
+    private EnumMember cardMember;
+
     public LeaderCard(EnumMember member,EnumRecorded recorded,EnumColor color,int health) {
         super(member.toString(),EnumCardType.Leader,recorded,color);
         this.setEnumMember(member);
@@ -16,10 +17,10 @@ public class LeaderCard extends BaseCard{
         this.maxHealth = health;
     }
     public EnumMember getEnumMember(){
-        return this.enumMember;
+        return this.cardMember;
     }
     public void setEnumMember(EnumMember member){
-        this.enumMember = member;
+        this.cardMember = member;
     }
     @Override
     public String getTitle() {

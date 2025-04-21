@@ -2,68 +2,81 @@ package cardApi;
 
 
 public class MemberCard extends BaseCard{
-    public EnumMember enumMember;
-    public int maxHealth;
-    public int nowHealth;
-    public int cardLimit;
-    public boolean buzzFlag;
+    private EnumMember cardMember;
+    private int maxHealth;
+    private int nowHealth;
+    private int cardLimit;
+    private boolean buzzFlag;
+    private EnumCostTable changeCost;
 
-    public MemberCard( EnumMember member, EnumRecorded recorded, EnumColor color, EnumCardType type, int health, boolean buzz, int limit) {
+    public MemberCard( EnumMember member, EnumRecorded recorded, EnumColor color, EnumCardType type, int health,EnumCostTable cost, boolean buzz, int limit) {
         super(member.toString(), type, recorded,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
+        this.setChangeCost(cost);
         this.setCardLimit(limit);
         this.setBuzzFlag(buzz);
     }
-    public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health, boolean buzz) {
+    public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health,EnumCostTable cost, boolean buzz) {
         super(member.toString(), type, recorded,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
+        this.setChangeCost(cost);
         this.setCardLimit(4);
         this.setBuzzFlag(buzz);
     }
-    public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health, int limit) {
+    public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health,EnumCostTable cost, int limit) {
         super(member.toString(), type, recorded,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
+        this.setChangeCost(cost);
         this.setCardLimit(limit);
         this.setBuzzFlag(false);
     }
-    public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health) {
+    public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health,EnumCostTable cost) {
         super(member.toString(), type, recorded,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
+        this.setChangeCost(cost);
         this.setCardLimit(4);
         this.setBuzzFlag(false);
     }
     public EnumMember getEnumMember(){
-        return this.enumMember;
+        return cardMember;
     }
     public void setEnumMember(EnumMember member){
-        this.enumMember = member;
+        this.cardMember = member;
     }
     public int getMaxHealth(){
-        return this.maxHealth;
+        return maxHealth;
     }
     public void setMaxHealth(int health){
         this.maxHealth = health;
     }
     public int getNowHealth(){
-        return this.nowHealth;
+        return nowHealth;
     }
     public void setNowHealth(int health){
         this.nowHealth = health;
     }
     public int getCardLimit(){
-        return this.cardLimit;
+        return cardLimit;
     }
     public void setCardLimit(int limit){
         this.cardLimit = limit;
     }
     public boolean isBuzzFlag(){
-        return this.buzzFlag;
+        return buzzFlag;
     }
     public void setBuzzFlag(boolean flag){
         this.buzzFlag = flag;
+    }
+
+    public EnumCostTable getChangeCost() {
+        return changeCost;
+    }
+
+    public void setChangeCost(EnumCostTable cost) {
+        this.changeCost = cost;
     }
 }
