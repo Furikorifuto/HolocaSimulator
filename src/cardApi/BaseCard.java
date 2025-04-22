@@ -7,7 +7,7 @@ public class BaseCard {
     private EnumCardType cardType;
     private EnumRecorded cardRecorded;
 
-    public BaseCard(String name,EnumCardType type,EnumRecorded recorded,EnumColor color){
+    public BaseCard(String name,EnumRecorded recorded,EnumCardType type,EnumColor color){
         this.setCardName(name);
         this.setCardType(type);
         this.setRecorded(recorded);

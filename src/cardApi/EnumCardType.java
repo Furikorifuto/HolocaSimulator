@@ -11,5 +11,6 @@ public enum EnumCardType {
     Tool,
     Mascot,
     Fan,
+    Staff,
     Yell
 }

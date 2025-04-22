@@ -6,7 +6,7 @@ public class LeaderCard extends BaseCard{
     private EnumMember cardMember;
 
     public LeaderCard(EnumMember member,EnumRecorded recorded,EnumColor color,int health) {
-        super(member.toString(),EnumCardType.Leader,recorded,color);
+        super(member.toString(),recorded,EnumCardType.Leader,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
     }

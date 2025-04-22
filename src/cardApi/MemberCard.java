@@ -10,7 +10,7 @@ public class MemberCard extends BaseCard{
     private EnumCostTable changeCost;
 
     public MemberCard( EnumMember member, EnumRecorded recorded, EnumColor color, EnumCardType type, int health,EnumCostTable cost, boolean buzz, int limit) {
-        super(member.toString(), type, recorded,color);
+        super(member.toString(),recorded,type,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
         this.setChangeCost(cost);
@@ -18,7 +18,7 @@ public class MemberCard extends BaseCard{
         this.setBuzzFlag(buzz);
     }
     public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health,EnumCostTable cost, boolean buzz) {
-        super(member.toString(), type, recorded,color);
+        super(member.toString(),recorded,type,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
         this.setChangeCost(cost);
@@ -26,7 +26,7 @@ public class MemberCard extends BaseCard{
         this.setBuzzFlag(buzz);
     }
     public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health,EnumCostTable cost, int limit) {
-        super(member.toString(), type, recorded,color);
+        super(member.toString(),recorded,type,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
         this.setChangeCost(cost);
@@ -34,7 +34,7 @@ public class MemberCard extends BaseCard{
         this.setBuzzFlag(false);
     }
     public MemberCard( EnumMember member, EnumRecorded recorded,EnumColor color, EnumCardType type, int health,EnumCostTable cost) {
-        super(member.toString(), type, recorded,color);
+        super(member.toString(),recorded,type,color);
         this.setEnumMember(member);
         this.setMaxHealth(health);
         this.setChangeCost(cost);

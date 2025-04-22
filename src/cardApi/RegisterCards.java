@@ -1,5 +1,10 @@
 package cardApi;
 
+//カードの情報を書く
+//リーダーは順不同
+//メインデッキのカードは古い順で登録する
+//デッキデータはリーダー(8bit)(アドレス$00)、エールデッキ(8bit)(アドレス$01-$15)、メインデッキ(16bit)(アドレス$16-)、で取り出す。
+
 public class RegisterCards {
     public static final LeaderCard MUMEI_SD = new LeaderCard(EnumMember.Mumei,EnumRecorded.StartDeck,EnumColor.White,5);
     public static final LeaderCard PEKORA_SD = new LeaderCard(EnumMember.Pekora,EnumRecorded.StartDeck,EnumColor.Green,5);
@@ -46,13 +51,14 @@ public class RegisterCards {
     public static final MemberCard AZKI_60 = new MemberCard(EnumMember.Azki,EnumRecorded.StartDeck,EnumColor.Green,EnumCardType.Debut,60,EnumCostTable.Any1);
     public static final MemberCard AZKI_160 = new MemberCard(EnumMember.Azki,EnumRecorded.StartDeck,EnumColor.Green,EnumCardType.First,160,EnumCostTable.Any1);
     public static final MemberCard AZKI_190 = new MemberCard(EnumMember.Azki,EnumRecorded.StartDeck,EnumColor.Green,EnumCardType.Second,190,EnumCostTable.Any2);
-    public static final MemberCard IOFI_70 = new MemberCard(EnumMember.Iofi,EnumRecorded.StartDeck,EnumColor.Green,EnumCardType.Debut,70,EnumCostTable.Any1);
+    public static final MemberCard IOFI_70_SD = new MemberCard(EnumMember.Iofi,EnumRecorded.StartDeck,EnumColor.Green,EnumCardType.Debut,70,EnumCostTable.Any1);
     public static final MemberCard SORAZ = new MemberCard(EnumMember.SorAZ,EnumRecorded.StartDeck,EnumColor.SorAZ,EnumCardType.First,130,EnumCostTable.Any1);
-    public static final MemberCard KANATA_150 = new MemberCard(EnumMember.Kanata,EnumRecorded.StartDeck,EnumColor.None,EnumCardType.Spot,150,EnumCostTable.Any1);
-    public static final MemberCard KOYORI_50 = new MemberCard(EnumMember.Kanata,EnumRecorded.StartDeck,EnumColor.None,EnumCardType.Spot,50,EnumCostTable.Any1);
+    public static final MemberCard KANATA_SP = new MemberCard(EnumMember.Kanata,EnumRecorded.StartDeck,EnumColor.None,EnumCardType.Spot,150,EnumCostTable.Any1);
+    public static final MemberCard KOYORI_SP = new MemberCard(EnumMember.Kanata,EnumRecorded.StartDeck,EnumColor.None,EnumCardType.Spot,50,EnumCostTable.Any1);
+    public static final SupportCard FIRST_GRAVITY = new SupportCard("First Gravity",EnumRecorded.StartDeck,EnumCardType.Event,true);
     public static final MemberCard KANATA_90 = new MemberCard(EnumMember.Kanata,EnumRecorded.BloomingRadiance,EnumColor.White,EnumCardType.Debut,90,EnumCostTable.Any1,20);
     public static final MemberCard KANATA_60 = new MemberCard(EnumMember.Kanata,EnumRecorded.BloomingRadiance,EnumColor.White,EnumCardType.Debut,60,EnumCostTable.Any1);
-    public static final MemberCard KANATA_150_BR = new MemberCard(EnumMember.Kanata,EnumRecorded.BloomingRadiance,EnumColor.White,EnumCardType.First,150,EnumCostTable.None);
+    public static final MemberCard KANATA_150 = new MemberCard(EnumMember.Kanata,EnumRecorded.BloomingRadiance,EnumColor.White,EnumCardType.First,150,EnumCostTable.None);
     public static final MemberCard KANATA_120 = new MemberCard(EnumMember.Kanata,EnumRecorded.BloomingRadiance,EnumColor.White,EnumCardType.First,120,EnumCostTable.Any1);
     public static final MemberCard KANATA_100 = new MemberCard(EnumMember.Kanata,EnumRecorded.BloomingRadiance,EnumColor.White,EnumCardType.First,100,EnumCostTable.Any1);
     public static final MemberCard KANATA_200 = new MemberCard(EnumMember.Kanata,EnumRecorded.BloomingRadiance,EnumColor.White,EnumCardType.Second,200,EnumCostTable.Any2);
@@ -96,7 +102,7 @@ public class RegisterCards {
     public static final MemberCard IOFI_170 = new MemberCard(EnumMember.Iofi,EnumRecorded.BloomingRadiance,EnumColor.Green,EnumCardType.First,170,EnumCostTable.Any1);
     public static final MemberCard IOFI_120 = new MemberCard(EnumMember.Iofi,EnumRecorded.BloomingRadiance,EnumColor.Green,EnumCardType.First,120,EnumCostTable.Any1);
     public static final MemberCard IOFI_180 = new MemberCard(EnumMember.Iofi,EnumRecorded.BloomingRadiance,EnumColor.Green,EnumCardType.Second,180,EnumCostTable.Any1);
-    public static final MemberCard LUI_100 = new MemberCard(EnumMember.Lui,EnumRecorded.BloomingRadiance,EnumColor.Red,EnumCardType.Debut,100,EnumCostTable.Any1,20);
+    public static final MemberCard LUI_100_D = new MemberCard(EnumMember.Lui,EnumRecorded.BloomingRadiance,EnumColor.Red,EnumCardType.Debut,100,EnumCostTable.Any1,20);
     public static final MemberCard LUI_60 = new MemberCard(EnumMember.Lui,EnumRecorded.BloomingRadiance,EnumColor.Red,EnumCardType.Debut,60,EnumCostTable.Any1);
     public static final MemberCard LUI_170 = new MemberCard(EnumMember.Lui,EnumRecorded.BloomingRadiance,EnumColor.Red,EnumCardType.First,170,EnumCostTable.Any1);
     public static final MemberCard LUI_130 = new MemberCard(EnumMember.Lui,EnumRecorded.BloomingRadiance,EnumColor.Red,EnumCardType.First,130,EnumCostTable.Any1);
@@ -140,9 +146,95 @@ public class RegisterCards {
     public static final MemberCard FLARE_FA = new MemberCard(EnumMember.Flare,EnumRecorded.BloomingRadiance,EnumColor.None,EnumCardType.Spot,80,EnumCostTable.Any1);
     public static final MemberCard NOEL_FA = new MemberCard(EnumMember.Noel,EnumRecorded.BloomingRadiance,EnumColor.None,EnumCardType.Spot,90,EnumCostTable.Any1);
     public static final MemberCard MARINE_FA = new MemberCard(EnumMember.Marine,EnumRecorded.BloomingRadiance,EnumColor.None,EnumCardType.Spot,70,EnumCostTable.Any1);
-    public static final MemberCard CALLI_70 = new MemberCard(EnumMember.Calli,EnumRecorded.BloomingRadiance,EnumColor.None,EnumCardType.Spot,70,EnumCostTable.Any1);
-    public static final MemberCard AME_80 = new MemberCard(EnumMember.Ame,EnumRecorded.BloomingRadiance,EnumColor.None,EnumCardType.Spot,80,EnumCostTable.Any1);
-
+    public static final MemberCard CALLI_SP = new MemberCard(EnumMember.Calli,EnumRecorded.BloomingRadiance,EnumColor.None,EnumCardType.Spot,70,EnumCostTable.Any1);
+    public static final MemberCard AME_SP = new MemberCard(EnumMember.Ame,EnumRecorded.BloomingRadiance,EnumColor.None,EnumCardType.Spot,80,EnumCostTable.Any1);
+    public static final SupportCard IDLE_MIKE = new SupportCard("Idle Mike",EnumRecorded.BloomingRadiance,EnumCardType.Item,true);
+    public static final SupportCard GAMING_PC = new SupportCard("Gaming PC",EnumRecorded.BloomingRadiance,EnumCardType.Item,true);
+    public static final SupportCard ENCORE = new SupportCard("Encore",EnumRecorded.BloomingRadiance,EnumCardType.Event,false);
+    public static final SupportCard MOON_RABBIT = new SupportCard("Moon Rabbit",EnumRecorded.BloomingRadiance,EnumCardType.Event,true);
+    public static final SupportCard CLUB_SMASH = new SupportCard("Club Smash",EnumRecorded.BloomingRadiance,EnumCardType.Event,true);
+    public static final SupportCard ID_3RD = new SupportCard("Call Holoh3ro",EnumRecorded.BloomingRadiance,EnumCardType.Event,true);
+    public static final SupportCard RAINMAKING = new SupportCard("Rainmaking",EnumRecorded.BloomingRadiance,EnumCardType.Event,false);
+    public static final SupportCard PROMISE = new SupportCard("Call Promise",EnumRecorded.BloomingRadiance,EnumCardType.Event,true);
+    public static final SupportCard HAND_AXE = new SupportCard("Mumei's Axe",EnumRecorded.BloomingRadiance,EnumCardType.Tool,false);
+    public static final SupportCard STELLA_MIKE = new SupportCard("Suisei's Mike",EnumRecorded.BloomingRadiance,EnumCardType.Tool,false);
+    public static final SupportCard UPAO = new SupportCard("Kanata's Upao",EnumRecorded.BloomingRadiance,EnumCardType.Mascot,false);
+    public static final SupportCard FRIEND = new SupportCard("Mumei's Friend",EnumRecorded.BloomingRadiance,EnumCardType.Mascot,false);
+    public static final SupportCard ANKIMO = new SupportCard("Sora's Ankimo",EnumRecorded.BloomingRadiance,EnumCardType.Mascot,false);
+    public static final SupportCard JOBS = new SupportCard("Aki's Jobs",EnumRecorded.BloomingRadiance,EnumCardType.Mascot,false);
+    public static final SupportCard GANMO = new SupportCard("Lui's Ganmo",EnumRecorded.BloomingRadiance,EnumCardType.Mascot,false);
+    public static final SupportCard KOTORI = new SupportCard("Kiara's Kotori",EnumRecorded.BloomingRadiance,EnumCardType.Mascot,false);
+    public static final SupportCard ROSETAI = new SupportCard("Aki's Team Rose",EnumRecorded.BloomingRadiance,EnumCardType.Fan,false);
+    public static final SupportCard NOUSAGI = new SupportCard("Pekora's Hare",EnumRecorded.BloomingRadiance,EnumCardType.Fan,false);
+    public static final SupportCard PIONEER = new SupportCard("AZKI's Pioneers",EnumRecorded.BloomingRadiance,EnumCardType.Fan,false);
+    public static final SupportCard KFP = new SupportCard("Kiara's KFP",EnumRecorded.BloomingRadiance,EnumCardType.Fan,false);
+    public static final SupportCard ZAIN = new SupportCard("Polka's Cast",EnumRecorded.BloomingRadiance,EnumCardType.Fan,false);
+    public static final SupportCard GENERAL_PC = new SupportCard("General PC",EnumRecorded.BloomingRadiance,EnumCardType.Item,false);
+    public static final SupportCard PEN_LIGHT = new SupportCard("Pen Light",EnumRecorded.BloomingRadiance,EnumCardType.Item,true);
+    public static final SupportCard CHANGE = new SupportCard("Change",EnumRecorded.BloomingRadiance,EnumCardType.Event,false);
+    public static final SupportCard INTIMIDATION = new SupportCard("Intimidation",EnumRecorded.BloomingRadiance,EnumCardType.Event,true);
+    public static final SupportCard CUSTOM_PC = new SupportCard("Custom PC",EnumRecorded.BloomingRadiance,EnumCardType.Item,false);
+    public static final SupportCard HOLOX = new SupportCard("Call HoloX",EnumRecorded.BloomingRadiance,EnumCardType.Event,true);
+    public static final SupportCard NODOKA = new SupportCard("Harusaki Nodoka",EnumRecorded.BloomingRadiance,EnumCardType.Staff,true);
+    public static final SupportCard MANAGER = new SupportCard("Manager",EnumRecorded.BloomingRadiance,EnumCardType.Staff,true);
+    public static final SupportCard SUB_PC = new SupportCard("Sub PC",EnumRecorded.BloomingRadiance,EnumCardType.Item,false);
+    public static final SupportCard AMAZING_PC = new SupportCard("Amazing PC",EnumRecorded.BloomingRadiance,EnumCardType.Item,true);
+    public static final SupportCard FAN_CIRCLE = new SupportCard("Fan Circle",EnumRecorded.BloomingRadiance,EnumCardType.Item,false);
+    public static final MemberCard CHOCO_100 = new MemberCard(EnumMember.Choco,EnumRecorded.StartDeck,EnumColor.Purple,EnumCardType.Debut,100,EnumCostTable.Any1,20);
+    public static final MemberCard CHOCO_60_D1 = new MemberCard(EnumMember.Choco,EnumRecorded.StartDeck,EnumColor.Purple,EnumCardType.Debut,60,EnumCostTable.Any1);
+    public static final MemberCard CHOCO_60_D2 = new MemberCard(EnumMember.Choco,EnumRecorded.StartDeck,EnumColor.Purple,EnumCardType.Debut,60,EnumCostTable.Any1);
+    public static final MemberCard CHOCO_140 = new MemberCard(EnumMember.Choco,EnumRecorded.StartDeck,EnumColor.Purple,EnumCardType.First,140,EnumCostTable.None);
+    public static final MemberCard CHOCO_130 = new MemberCard(EnumMember.Choco,EnumRecorded.StartDeck,EnumColor.Purple,EnumCardType.First,130,EnumCostTable.None);
+    public static final MemberCard CHOCO_110 = new MemberCard(EnumMember.Choco,EnumRecorded.StartDeck,EnumColor.Purple,EnumCardType.First,110,EnumCostTable.Any1);
+    public static final MemberCard CHOCO_230 = new MemberCard(EnumMember.Choco,EnumRecorded.StartDeck,EnumColor.Purple,EnumCardType.First,230,EnumCostTable.Any1,true);
+    public static final MemberCard CHOCO_190 = new MemberCard(EnumMember.Choco,EnumRecorded.StartDeck,EnumColor.Purple,EnumCardType.Second,190,EnumCostTable.Any1);
+    public static final MemberCard SUBARU_SP = new MemberCard(EnumMember.Subaru,EnumRecorded.StartDeck,EnumColor.None,EnumCardType.Spot,60,EnumCostTable.Any1);
+    public static final MemberCard LUNA_SP = new MemberCard(EnumMember.Luna,EnumRecorded.StartDeck,EnumColor.None,EnumCardType.Spot,60,EnumCostTable.Any1);
+    public static final SupportCard UNIT_SCL = new SupportCard("SubaChocoLuna",EnumRecorded.StartDeck,EnumCardType.Event,true);
+    public static final SupportCard CHOCO_COOK = new SupportCard("Choco's Cooking",EnumRecorded.StartDeck,EnumCardType.Event,false);
+    public static final SupportCard CHOCOLA = new SupportCard("Choco's Chocola",EnumRecorded.StartDeck,EnumCardType.Mascot,false);
+    public static final MemberCard OKAYU_100 = new MemberCard(EnumMember.Okayu,EnumRecorded.StartDeck,EnumColor.Blue,EnumCardType.Debut,100,EnumCostTable.Any1,20);
+    public static final MemberCard OKAYU_70 = new MemberCard(EnumMember.Okayu,EnumRecorded.StartDeck,EnumColor.Blue,EnumCardType.Debut,70,EnumCostTable.Any1);
+    public static final MemberCard OKAYU_80 = new MemberCard(EnumMember.Okayu,EnumRecorded.StartDeck,EnumColor.Blue,EnumCardType.Debut,80,EnumCostTable.Any1);
+    public static final MemberCard OKAYU_170 = new MemberCard(EnumMember.Okayu,EnumRecorded.StartDeck,EnumColor.Blue,EnumCardType.First,170,EnumCostTable.Any1);
+    public static final MemberCard OKAYU_140 = new MemberCard(EnumMember.Okayu,EnumRecorded.StartDeck,EnumColor.Blue,EnumCardType.First,140,EnumCostTable.Any1);
+    public static final MemberCard OKAYU_110 = new MemberCard(EnumMember.Okayu,EnumRecorded.StartDeck,EnumColor.Blue,EnumCardType.First,110,EnumCostTable.Any1);
+    public static final MemberCard OKAYU_240 = new MemberCard(EnumMember.Okayu,EnumRecorded.StartDeck,EnumColor.Blue,EnumCardType.First,240,EnumCostTable.Any2,true);
+    public static final MemberCard OKAYU_190 = new MemberCard(EnumMember.Okayu,EnumRecorded.StartDeck,EnumColor.Blue,EnumCardType.Second,190,EnumCostTable.Any2);
+    public static final MemberCard KORONE_SP = new MemberCard(EnumMember.Luna,EnumRecorded.StartDeck,EnumColor.None,EnumCardType.Spot,70,EnumCostTable.Any1);
+    public static final MemberCard LAPLUS_SP = new MemberCard(EnumMember.Laplus,EnumRecorded.StartDeck,EnumColor.None,EnumCardType.Spot,60,EnumCostTable.Any1);
+    public static final SupportCard DOROKEN = new SupportCard("Dorobou Construction",EnumRecorded.StartDeck,EnumCardType.Event,true);
+    public static final SupportCard OKANYAN = new SupportCard("Okayu's Okanyan",EnumRecorded.StartDeck,EnumCardType.Mascot,false);
+    public static final SupportCard ONIGIRYA = new SupportCard("Okayu's Onigirya",EnumRecorded.StartDeck,EnumCardType.Fan,false);
+    public static final MemberCard AYAME_90 = new MemberCard(EnumMember.Ayame,EnumRecorded.StartDeck,EnumColor.Red,EnumCardType.Debut,90,EnumCostTable.None,20);
+    public static final MemberCard AYAME_70 = new MemberCard(EnumMember.Ayame,EnumRecorded.StartDeck,EnumColor.Red,EnumCardType.Debut,70,EnumCostTable.None);
+    public static final MemberCard AYAME_60 = new MemberCard(EnumMember.Ayame,EnumRecorded.StartDeck,EnumColor.Red,EnumCardType.Debut,60,EnumCostTable.None);
+    public static final MemberCard AYAME_140_F1 = new MemberCard(EnumMember.Ayame,EnumRecorded.StartDeck,EnumColor.Red,EnumCardType.First,140,EnumCostTable.None);
+    public static final MemberCard AYAME_140_F2 = new MemberCard(EnumMember.Ayame,EnumRecorded.StartDeck,EnumColor.Red,EnumCardType.First,140,EnumCostTable.Any1);
+    public static final MemberCard AYAME_120 = new MemberCard(EnumMember.Ayame,EnumRecorded.StartDeck,EnumColor.Red,EnumCardType.First,120,EnumCostTable.Any1);
+    public static final MemberCard AYAME_230 = new MemberCard(EnumMember.Ayame,EnumRecorded.StartDeck,EnumColor.Red,EnumCardType.First,230,EnumCostTable.Any1,true);
+    public static final MemberCard AYAME_180 = new MemberCard(EnumMember.Ayame,EnumRecorded.StartDeck,EnumColor.Red,EnumCardType.Second,180,EnumCostTable.Any2);
+    public static final MemberCard FUBUKI_SP = new MemberCard(EnumMember.Fubuki,EnumRecorded.StartDeck,EnumColor.None,EnumCardType.Spot,80,EnumCostTable.Any1);
+    public static final MemberCard MIO_SP = new MemberCard(EnumMember.Mio,EnumRecorded.StartDeck,EnumColor.None,EnumCardType.Spot,50,EnumCostTable.Any1);
+    public static final SupportCard AYAFUBUMI = new SupportCard("AyaFubuMi",EnumRecorded.StartDeck,EnumCardType.Event,true);
+    public static final SupportCard SOUTOU = new SupportCard("Ayame's Soutou",EnumRecorded.StartDeck,EnumCardType.Tool,false);
+    public static final SupportCard POYOYO = new SupportCard("Ayame's Poyoyo",EnumRecorded.StartDeck,EnumCardType.Mascot,false);
+    public static final MemberCard FUBUKI_100_D = new MemberCard(EnumMember.Fubuki,EnumRecorded.QuintetSpectrum,EnumColor.White,EnumCardType.Debut,100,EnumCostTable.Any1,20);
+    public static final MemberCard FUBUKI_80 = new MemberCard(EnumMember.Fubuki,EnumRecorded.QuintetSpectrum,EnumColor.White,EnumCardType.Debut,80,EnumCostTable.Any1);
+    public static final MemberCard FUBUKI_150 = new MemberCard(EnumMember.Fubuki,EnumRecorded.QuintetSpectrum,EnumColor.White,EnumCardType.First,80,EnumCostTable.Any1);
+    public static final MemberCard FUBUKI_120 = new MemberCard(EnumMember.Fubuki,EnumRecorded.QuintetSpectrum,EnumColor.White,EnumCardType.First,120,EnumCostTable.Any1);
+    public static final MemberCard FUBUKI_100_F = new MemberCard(EnumMember.Fubuki,EnumRecorded.QuintetSpectrum,EnumColor.White,EnumCardType.First,100,EnumCostTable.Any1);
+    public static final MemberCard FUBUKI_180 = new MemberCard(EnumMember.Fubuki,EnumRecorded.QuintetSpectrum,EnumColor.White,EnumCardType.Second,180,EnumCostTable.Any2);
+    public static final MemberCard NOEL_130_D = new MemberCard(EnumMember.Noel,EnumRecorded.QuintetSpectrum,EnumColor.White,EnumCardType.Debut,130,EnumCostTable.Any1);
+    public static final MemberCard NOEL_180 = new MemberCard(EnumMember.Noel,EnumRecorded.QuintetSpectrum,EnumColor.White,EnumCardType.First,180,EnumCostTable.Any2);
+    public static final MemberCard NOEL_130_F = new MemberCard(EnumMember.Noel,EnumRecorded.QuintetSpectrum,EnumColor.White,EnumCardType.First,130,EnumCostTable.Any1);
+    public static final MemberCard NOEL_260 = new MemberCard(EnumMember.Noel,EnumRecorded.QuintetSpectrum,EnumColor.White,EnumCardType.First,260,EnumCostTable.Any2,true);
+    public static final MemberCard REINE_100 = new MemberCard(EnumMember.Reine,EnumRecorded.QuintetSpectrum,EnumColor.Green,EnumCardType.Debut,100,EnumCostTable.Any1,20);
+    public static final MemberCard REINE_60 = new MemberCard(EnumMember.Reine,EnumRecorded.QuintetSpectrum,EnumColor.Green,EnumCardType.Debut,60,EnumCostTable.Any1);
+    public static final MemberCard REINE_160 = new MemberCard(EnumMember.Reine,EnumRecorded.QuintetSpectrum,EnumColor.Green,EnumCardType.First,160,EnumCostTable.Any1);
+    public static final MemberCard REINE_120 = new MemberCard(EnumMember.Reine,EnumRecorded.QuintetSpectrum,EnumColor.Green,EnumCardType.First,120,EnumCostTable.Any1);
+    public static final MemberCard REINE_130 = new MemberCard(EnumMember.Reine,EnumRecorded.QuintetSpectrum,EnumColor.Green,EnumCardType.First,130,EnumCostTable.Any1);
+    public static final MemberCard REINE_190 = new MemberCard(EnumMember.Reine,EnumRecorded.QuintetSpectrum,EnumColor.Green,EnumCardType.Second,190,EnumCostTable.Any2);
 
     public RegisterCards(){
 
