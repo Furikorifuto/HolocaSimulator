@@ -1,6 +1,6 @@
 package cardApi;
 
-public enum SkillTarget {
+public enum EnumSkillTarget {
     OurSidekick,
     OurCenter
 }

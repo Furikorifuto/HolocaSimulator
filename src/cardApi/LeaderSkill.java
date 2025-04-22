@@ -3,8 +3,8 @@ package cardApi;
 public class LeaderSkill {
     private boolean special_flag;
     private int cost;
-    private SkillTarget skillTarget;
-    public LeaderSkill(boolean special,int cost,SkillTarget target){
+    private EnumSkillTarget skillTarget;
+    public LeaderSkill(boolean special, int cost, EnumSkillTarget target){
         this.setSpecial(special);
         this.setCost(cost);
         this.setSkillTarget(target);
@@ -25,11 +25,11 @@ public class LeaderSkill {
         this.cost = cost;
     }
 
-    public SkillTarget getSkillTarget() {
+    public EnumSkillTarget getSkillTarget() {
         return skillTarget;
     }
 
-    public void setSkillTarget(SkillTarget target) {
+    public void setSkillTarget(EnumSkillTarget target) {
         this.skillTarget = target;
     }
 }

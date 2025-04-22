@@ -1,6 +1,7 @@
 package cardApi;
 
 public enum EnumCostTable {
+    None(EnumCost.None),
     Any1(EnumCost.Any),
     Any2(EnumCost.Any,EnumCost.Any);
 

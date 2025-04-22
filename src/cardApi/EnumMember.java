@@ -37,6 +37,7 @@ public enum EnumMember {
     Inanis(EnumMemberTag.EN,EnumMemberTag.Myth,EnumMemberTag.Painter,EnumMemberTag.Sea),
     Kiara(EnumMemberTag.EN,EnumMemberTag.Myth,EnumMemberTag.Bird),
     Gura(EnumMemberTag.EN,EnumMemberTag.Myth),
+    Ame(EnumMemberTag.EN,EnumMemberTag.Myth),
     Irys(EnumMemberTag.EN,EnumMemberTag.Promise,EnumMemberTag.Singer),
     Kroni(EnumMemberTag.EN,EnumMemberTag.Promise),
     Mumei(EnumMemberTag.EN,EnumMemberTag.Promise,EnumMemberTag.Bird,EnumMemberTag.Painter),

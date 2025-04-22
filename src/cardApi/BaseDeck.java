@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseDeck {
-    LeaderCard leaderCard;
-    List<MemberCard> memberCards = new ArrayList<MemberCard>(50);
-    List<EnumColor> yellCards = new ArrayList<EnumColor>(20);
+    private LeaderCard leaderCard;
+    private List<MemberCard> memberCards = new ArrayList<MemberCard>(50);
+    private List<EnumColor> yellCards = new ArrayList<EnumColor>(20);
+
     public BaseDeck(LeaderCard leader){
         this.setLeader(leader);
     }
