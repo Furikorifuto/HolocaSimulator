@@ -79,4 +79,5 @@ public class MemberCard extends BaseCard{
     public void setChangeCost(EnumCostTable cost) {
         this.changeCost = cost;
     }
+
 }

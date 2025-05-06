@@ -45,4 +45,7 @@ public class BaseCard {
     public String getCardStatus(){
         return "This is base class!";
     }
+    public boolean isMember(){
+        return true;
+    }
 }

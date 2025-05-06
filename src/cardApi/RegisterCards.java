@@ -1,8 +1,6 @@
 package cardApi;
 
 //カードの情報を書く
-//リーダーは順不同
-//メインデッキのカードは古い順で登録する
 //デッキデータはリーダー(8bit)(アドレス$00)、エールデッキ(8bit)(アドレス$01-$15)、メインデッキ(16bit)(アドレス$16-)、で取り出す。
 
 public class RegisterCards {
@@ -432,8 +430,8 @@ public class RegisterCards {
     public static final SupportCard WAIT_REQUEST = new SupportCard("Wait Request",EnumRecorded.EliteSpark,EnumCardType.Event,true);
     public static final SupportCard FAN_MEETING = new SupportCard("Fan Meeting",EnumRecorded.EliteSpark,EnumCardType.Event,true);
     public static final SupportCard HOLO_QUESTION = new SupportCard("Holo Question",EnumRecorded.EliteSpark,EnumCardType.Event,false);
-    public static final SupportCard CALL_AREA_15 = new SupportCard("Call AREA 15",EnumRecorded.EliteSpark,EnumCardType.Event,true);
-    public static final SupportCard CALL_FORTH = new SupportCard("Call Forth",EnumRecorded.EliteSpark,EnumCardType.Event,true);
+    public static final SupportCard AREA_15 = new SupportCard("Call AREA 15",EnumRecorded.EliteSpark,EnumCardType.Event,true);
+    public static final SupportCard FORTH = new SupportCard("Call Forth",EnumRecorded.EliteSpark,EnumCardType.Event,true);
     public static final SupportCard FPS_STREAMING = new SupportCard("FPS Streaming",EnumRecorded.EliteSpark,EnumCardType.Event,true);
     public static final SupportCard HOLO_CAP = new SupportCard("Holo Cap",EnumRecorded.EliteSpark,EnumCardType.Tool,false);
     public static final SupportCard RIFLE = new SupportCard("Rifle",EnumRecorded.EliteSpark,EnumCardType.Tool,false);
