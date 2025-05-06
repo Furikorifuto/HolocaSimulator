@@ -1,16 +1,29 @@
 
 
-import netscape.javascript.JSException;
-import netscape.javascript.JSObject;
+import cardApi.*;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
-public class CardBattleForm extends JFrame {
+public class CardBattleForm extends JFrame{
+    public int count = 0;
+    public int nextTime = 100;
+    public Timer timer;
+    public boolean timerStopFlag = false;
+    public BaseDeck baseDeck1P;
+    public BaseDeck baseDeck2P;
+    //stage
+    public LeaderCard leader1P;
+    public LeaderCard leader2P;
+    public List<BaseCard> hand1p = new ArrayList<>();
+    //swing
     public JPanel panelStatus1P = new JPanel(null);
     public JLabel labelLife1P = new JLabel("Life");
     public JLabel labelLifeValue1P = new JLabel();
@@ -75,14 +88,8 @@ public class CardBattleForm extends JFrame {
     public JLabel labelBack52P = new JLabel("Back-5");
     public JLabel labelBack5Value2P = new JLabel();
 
-    public String[] strings = {
-            "one","two",
-            "three","four",
-            "five","six",
-            "seven","eight",
-            "nine","ten",
-            "eleven","twelve"};
-    public JList<String> listHand = new JList<>(strings);
+    public DefaultListModel<String> listModel = new DefaultListModel<>();
+    public JList<String> listHand = new JList<>(listModel);
     public JScrollPane scrollPaneHand = new JScrollPane(listHand);
 
     public JPanel panelAction = new JPanel();
@@ -102,31 +109,34 @@ public class CardBattleForm extends JFrame {
 
     public JPanel panel = new JPanel();
 
-    public CardBattleForm(){
+    public CardBattleForm() {
         super("Holoca Battle Simulator");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setSize(640,480);
+        this.setSize(640, 480);
         this.setResizable(false);
 
+        this.mainDeck1PCreate();
+        this.mainDeck2PCreate();
+
         panelStatus1P.setBorder(new TitledBorder("1P Status"));
-        panelStatus1P.setBounds(5,5,150,90);
-        labelLife1P.setBounds(10,20,45,20);
-        labelLifeValue1P.setBounds(45,20,20,20);
+        panelStatus1P.setBounds(5, 5, 150, 90);
+        labelLife1P.setBounds(10, 20, 45, 20);
+        labelLifeValue1P.setBounds(45, 20, 20, 20);
         labelLifeValue1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelPower1P.setBounds(70,20,45,20);
-        labelPowerValue1P.setBounds(120,20,20,20);
+        labelPower1P.setBounds(70, 20, 45, 20);
+        labelPowerValue1P.setBounds(120, 20, 20, 20);
         labelPowerValue1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelYellDeck1P.setBounds(10,40,45,20);
-        labelYellDeckValue1P.setBounds(45,40,20,20);
+        labelYellDeck1P.setBounds(10, 40, 45, 20);
+        labelYellDeckValue1P.setBounds(45, 40, 20, 20);
         labelYellDeckValue1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelMainDeck1P.setBounds(70,40,45,20);
-        labelMainDeckValue1P.setBounds(120,40,20,20);
+        labelMainDeck1P.setBounds(70, 40, 45, 20);
+        labelMainDeckValue1P.setBounds(120, 40, 20, 20);
         labelMainDeckValue1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelHand1P.setBounds(10,60,45,20);
-        labelHandValue1P.setBounds(45,60,20,20);
+        labelHand1P.setBounds(10, 60, 45, 20);
+        labelHandValue1P.setBounds(45, 60, 20, 20);
         labelHandValue1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelArchive1P.setBounds(70,60,45,20);
-        labelArchiveValue1P.setBounds(120,60,20,20);
+        labelArchive1P.setBounds(70, 60, 45, 20);
+        labelArchiveValue1P.setBounds(120, 60, 20, 20);
         labelArchiveValue1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
         panelStatus1P.add(labelLife1P);
         panelStatus1P.add(labelLifeValue1P);
@@ -143,30 +153,30 @@ public class CardBattleForm extends JFrame {
         this.add(panelStatus1P);
 
         panelStage1P.setBorder(new TitledBorder("1P Stage"));
-        panelStage1P.setBounds(5,95,150,190);
-        labelLeader1P.setBounds(10,20,45,20);
-        labelLeaderValue1P.setBounds(55,20,85,20);
+        panelStage1P.setBounds(5, 95, 150, 190);
+        labelLeader1P.setBounds(10, 20, 45, 20);
+        labelLeaderValue1P.setBounds(55, 20, 85, 20);
         labelLeaderValue1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelCenter1P.setBounds(10,40,45,20);
-        labelCenterValue1P.setBounds(55,40,85,20);
+        labelCenter1P.setBounds(10, 40, 45, 20);
+        labelCenterValue1P.setBounds(55, 40, 85, 20);
         labelCenterValue1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelCollab1P.setBounds(10,60,45,20);
-        labelCollabValue1P.setBounds(55,60,85,20);
+        labelCollab1P.setBounds(10, 60, 45, 20);
+        labelCollabValue1P.setBounds(55, 60, 85, 20);
         labelCollabValue1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelBack11P.setBounds(10,80,45,20);
-        labelBack1Value1P.setBounds(55,80,85,20);
+        labelBack11P.setBounds(10, 80, 45, 20);
+        labelBack1Value1P.setBounds(55, 80, 85, 20);
         labelBack1Value1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelBack21P.setBounds(10,100,45,20);
-        labelBack2Value1P.setBounds(55,100,85,20);
+        labelBack21P.setBounds(10, 100, 45, 20);
+        labelBack2Value1P.setBounds(55, 100, 85, 20);
         labelBack2Value1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelBack31P.setBounds(10,120,45,20);
-        labelBack3Value1P.setBounds(55,120,85,20);
+        labelBack31P.setBounds(10, 120, 45, 20);
+        labelBack3Value1P.setBounds(55, 120, 85, 20);
         labelBack3Value1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelBack41P.setBounds(10,140,45,20);
-        labelBack4Value1P.setBounds(55,140,85,20);
+        labelBack41P.setBounds(10, 140, 45, 20);
+        labelBack4Value1P.setBounds(55, 140, 85, 20);
         labelBack4Value1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelBack51P.setBounds(10,160,45,20);
-        labelBack5Value1P.setBounds(55,160,85,20);
+        labelBack51P.setBounds(10, 160, 45, 20);
+        labelBack5Value1P.setBounds(55, 160, 85, 20);
         labelBack5Value1P.setBorder(new BevelBorder(BevelBorder.LOWERED));
         panelStage1P.add(labelLeader1P);
         panelStage1P.add(labelLeaderValue1P);
@@ -187,24 +197,24 @@ public class CardBattleForm extends JFrame {
         this.add(panelStage1P);
 
         panelStatus2P.setBorder(new TitledBorder("2P Status"));
-        panelStatus2P.setBounds(470,5,150,90);
-        labelLife2P.setBounds(10,20,45,20);
-        labelLifeValue2P.setBounds(45,20,20,20);
+        panelStatus2P.setBounds(470, 5, 150, 90);
+        labelLife2P.setBounds(10, 20, 45, 20);
+        labelLifeValue2P.setBounds(45, 20, 20, 20);
         labelLifeValue2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelPower2P.setBounds(70,20,45,20);
-        labelPowerValue2P.setBounds(120,20,20,20);
+        labelPower2P.setBounds(70, 20, 45, 20);
+        labelPowerValue2P.setBounds(120, 20, 20, 20);
         labelPowerValue2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelYellDeck2P.setBounds(10,40,45,20);
-        labelYellDeckValue2P.setBounds(45,40,20,20);
+        labelYellDeck2P.setBounds(10, 40, 45, 20);
+        labelYellDeckValue2P.setBounds(45, 40, 20, 20);
         labelYellDeckValue2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelMainDeck2P.setBounds(70,40,45,20);
-        labelMainDeckValue2P.setBounds(120,40,20,20);
+        labelMainDeck2P.setBounds(70, 40, 45, 20);
+        labelMainDeckValue2P.setBounds(120, 40, 20, 20);
         labelMainDeckValue2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelHand2P.setBounds(10,60,45,20);
-        labelHandValue2P.setBounds(45,60,20,20);
+        labelHand2P.setBounds(10, 60, 45, 20);
+        labelHandValue2P.setBounds(45, 60, 20, 20);
         labelHandValue2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelArchive2P.setBounds(70,60,45,20);
-        labelArchiveValue2P.setBounds(120,60,20,20);
+        labelArchive2P.setBounds(70, 60, 45, 20);
+        labelArchiveValue2P.setBounds(120, 60, 20, 20);
         labelArchiveValue2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
         panelStatus2P.add(labelLife2P);
         panelStatus2P.add(labelLifeValue2P);
@@ -221,30 +231,30 @@ public class CardBattleForm extends JFrame {
         this.add(panelStatus2P);
 
         panelStage2P.setBorder(new TitledBorder("2P Stage"));
-        panelStage2P.setBounds(470,95,150,190);
-        labelLeader2P.setBounds(10,20,45,20);
-        labelLeaderValue2P.setBounds(55,20,85,20);
+        panelStage2P.setBounds(470, 95, 150, 190);
+        labelLeader2P.setBounds(10, 20, 45, 20);
+        labelLeaderValue2P.setBounds(55, 20, 85, 20);
         labelLeaderValue2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelCenter2P.setBounds(10,40,45,20);
-        labelCenterValue2P.setBounds(55,40,85,20);
+        labelCenter2P.setBounds(10, 40, 45, 20);
+        labelCenterValue2P.setBounds(55, 40, 85, 20);
         labelCenterValue2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelCollab2P.setBounds(10,60,45,20);
-        labelCollabValue2P.setBounds(55,60,85,20);
+        labelCollab2P.setBounds(10, 60, 45, 20);
+        labelCollabValue2P.setBounds(55, 60, 85, 20);
         labelCollabValue2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelBack12P.setBounds(10,80,45,20);
-        labelBack1Value2P.setBounds(55,80,85,20);
+        labelBack12P.setBounds(10, 80, 45, 20);
+        labelBack1Value2P.setBounds(55, 80, 85, 20);
         labelBack1Value2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelBack22P.setBounds(10,100,45,20);
-        labelBack2Value2P.setBounds(55,100,85,20);
+        labelBack22P.setBounds(10, 100, 45, 20);
+        labelBack2Value2P.setBounds(55, 100, 85, 20);
         labelBack2Value2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelBack32P.setBounds(10,120,45,20);
-        labelBack3Value2P.setBounds(55,120,85,20);
+        labelBack32P.setBounds(10, 120, 45, 20);
+        labelBack3Value2P.setBounds(55, 120, 85, 20);
         labelBack3Value2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelBack42P.setBounds(10,140,45,20);
-        labelBack4Value2P.setBounds(55,140,85,20);
+        labelBack42P.setBounds(10, 140, 45, 20);
+        labelBack4Value2P.setBounds(55, 140, 85, 20);
         labelBack4Value2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        labelBack52P.setBounds(10,160,45,20);
-        labelBack5Value2P.setBounds(55,160,85,20);
+        labelBack52P.setBounds(10, 160, 45, 20);
+        labelBack5Value2P.setBounds(55, 160, 85, 20);
         labelBack5Value2P.setBorder(new BevelBorder(BevelBorder.LOWERED));
         panelStage2P.add(labelLeader2P);
         panelStage2P.add(labelLeaderValue2P);
@@ -265,40 +275,258 @@ public class CardBattleForm extends JFrame {
         this.add(panelStage2P);
 
         scrollPaneHand.setBorder(new TitledBorder("Hand"));
-        scrollPaneHand.setBounds(5,285,150,150);
+        scrollPaneHand.setBounds(5, 285, 150, 150);
         this.add(scrollPaneHand);
 
         textAreaCard.setEditable(false);
         scrollPaneCard.setBorder(new TitledBorder("Card Status"));
-        scrollPaneCard.setBounds(160,95,305,190);
+        scrollPaneCard.setBounds(160, 95, 305, 190);
         this.add(scrollPaneCard);
 
         panelAction.setBorder(new TitledBorder("Commands"));
-        panelAction.setBounds(160,5,305,90);
+        panelAction.setBounds(160, 5, 305, 90);
+        buttonCommand1.setVisible(false);
+        buttonCommand2.setVisible(false);
+        buttonCommand3.setVisible(false);
+        buttonCommand4.setVisible(false);
         panelAction.add(buttonCommand1);
         panelAction.add(buttonCommand2);
         panelAction.add(buttonCommand3);
         panelAction.add(buttonCommand4);
         this.add(panelAction);
 
-        textAreaLog.setEditable(false);
-        scrollPaneLog.setBorder(new TitledBorder("Battle Log"));
-        scrollPaneLog.setBounds(160,285,305,150);
-        this.add(scrollPaneLog);
-
-        panelOption.setBorder(new TitledBorder("Option"));
-        panelOption.setBounds(470,285,150,150);
-        panelOption.add(buttonOption);
-        this.add(panelOption);
-
-        buttonOption.addActionListener(new ActionListener() {
+        buttonCommand1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
+                //redraw
+                if(Objects.equals(buttonCommand1.getText(), "ReDraw")){
 
+                }
             }
         });
+        buttonCommand2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                
+            }
+        });
+        textAreaLog.setEditable(false);
+        scrollPaneLog.setBorder(new TitledBorder("Battle Log"));
+        scrollPaneLog.setBounds(160, 285, 305, 150);
+        this.add(scrollPaneLog);
+
+
+        panelOption.setBorder(new TitledBorder("Option"));
+        panelOption.setBounds(470, 285, 150, 150);
+        panelOption.add(buttonOption);
+        this.add(panelOption);
         this.add(panel);
+
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        timer = new Timer(nextTime, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!timerStopFlag){
+                    switch (count++) {
+                        case 0:
+                            mainDeck1PShuffle();
+                            mainDeck2PShuffle();
+                            break;
+                        case 1:
+                            yellDeck1PShuffle();
+                            yellDeck2PShuffle();
+                            break;
+                        case 2:
+                            leaderCard1PPlace();
+                            leaderCard2PPlace();
+                            break;
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                            draw1PCard();
+                            break;
+                        case 10:
+                            buttonCommand1.setText("ReDraw");
+                            buttonCommand2.setText("Continue");
+                            buttonCommand1.setVisible(true);
+                            buttonCommand2.setVisible(true);
+                            textAreaLog.append("You can redraw\n");
+                            timerStopFlag = true;
+                            break;
+                    }
+                }
+            }
+        });
+        timer.start();
+
+    }
+    public void mainDeck1PCreate() {
+        baseDeck1P = new BaseDeck(RegisterCards.LUNA);
+        List<BaseCard> list = new ArrayList<>();
+        list.addLast(RegisterCards.LUNA_90);
+        list.addLast(RegisterCards.LUNA_90);
+        list.addLast(RegisterCards.LUNA_90);
+        list.addLast(RegisterCards.LUNA_90);
+        list.addLast(RegisterCards.LUNA_90);
+        list.addLast(RegisterCards.LUNA_90);
+        list.addLast(RegisterCards.LUNA_90);
+        list.addLast(RegisterCards.LUNA_90);
+        list.addLast(RegisterCards.LUNA_90);
+        list.addLast(RegisterCards.LUNA_90);
+        list.addLast(RegisterCards.LUNA_80);
+        list.addLast(RegisterCards.LUNA_80);
+        list.addLast(RegisterCards.LUNA_80);
+        list.addLast(RegisterCards.LUNA_80);
+        list.addLast(RegisterCards.LUNA_150);
+        list.addLast(RegisterCards.LUNA_150);
+        list.addLast(RegisterCards.LUNA_150);
+        list.addLast(RegisterCards.LUNA_150);
+        list.addLast(RegisterCards.LUNA_120);
+        list.addLast(RegisterCards.LUNA_120);
+        list.addLast(RegisterCards.LUNA_120);
+        list.addLast(RegisterCards.LUNA_120);
+        list.addLast(RegisterCards.LUNA_110);
+        list.addLast(RegisterCards.LUNA_110);
+        list.addLast(RegisterCards.LUNA_180);
+        list.addLast(RegisterCards.LUNA_180);
+        list.addLast(RegisterCards.LUNA_180);
+        list.addLast(RegisterCards.LUNA_180);
+        list.addLast(RegisterCards.GENERAL_PC);
+        list.addLast(RegisterCards.GENERAL_PC);
+        list.addLast(RegisterCards.GENERAL_PC);
+        list.addLast(RegisterCards.GENERAL_PC);
+        list.addLast(RegisterCards.OLD_PC);
+        list.addLast(RegisterCards.NODOKA);
+        list.addLast(RegisterCards.NODOKA);
+        list.addLast(RegisterCards.NODOKA);
+        list.addLast(RegisterCards.NODOKA);
+        list.addLast(RegisterCards.MANAGER);
+        list.addLast(RegisterCards.MANAGER);
+        list.addLast(RegisterCards.MANAGER);
+        list.addLast(RegisterCards.INTIMIDATION);
+        list.addLast(RegisterCards.MIKORONE24);
+        list.addLast(RegisterCards.MIKORONE24);
+        list.addLast(RegisterCards.FORTH);
+        list.addLast(RegisterCards.FORTH);
+        list.addLast(RegisterCards.FORTH);
+        list.addLast(RegisterCards.LUKNIGHT);
+        list.addLast(RegisterCards.LUKNIGHT);
+        list.addLast(RegisterCards.LUKNIGHT);
+        list.addLast(RegisterCards.LUKNIGHT);
+        baseDeck1P.setMemberCards(list);
+        List<EnumColor> list2 = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            list2.addLast(EnumColor.White);
+        }
+        baseDeck1P.setYellCards(list2);
+    }
+    public void mainDeck2PCreate(){
+        baseDeck2P = new BaseDeck(RegisterCards.MIKO);
+        List<BaseCard> list = new ArrayList<>();
+        list.addLast(RegisterCards.MIKO_100);
+        list.addLast(RegisterCards.MIKO_100);
+        list.addLast(RegisterCards.MIKO_100);
+        list.addLast(RegisterCards.MIKO_100);
+        list.addLast(RegisterCards.MIKO_100);
+        list.addLast(RegisterCards.MIKO_100);
+        list.addLast(RegisterCards.MIKO_100);
+        list.addLast(RegisterCards.MIKO_100);
+        list.addLast(RegisterCards.MIKO_80);
+        list.addLast(RegisterCards.MIKO_80);
+        list.addLast(RegisterCards.MIKO_80);
+        list.addLast(RegisterCards.MIKO_80);
+        list.addLast(RegisterCards.MIKO_150);
+        list.addLast(RegisterCards.MIKO_150);
+        list.addLast(RegisterCards.MIKO_150);
+        list.addLast(RegisterCards.MIKO_130_A);
+        list.addLast(RegisterCards.MIKO_130_A);
+        list.addLast(RegisterCards.MIKO_130_B);
+        list.addLast(RegisterCards.MIKO_130_B);
+        list.addLast(RegisterCards.MIKO_130_B);
+        list.addLast(RegisterCards.MIKO_130_B);
+        list.addLast(RegisterCards.MIKO_200);
+        list.addLast(RegisterCards.MIKO_200);
+        list.addLast(RegisterCards.MIKO_200);
+        list.addLast(RegisterCards.MIKO_200);
+        list.addLast(RegisterCards.Kintoki);
+        list.addLast(RegisterCards.Kintoki);
+        list.addLast(RegisterCards.Kintoki);
+        list.addLast(RegisterCards.Kintoki);
+        list.addLast(RegisterCards.Magchi);
+        list.addLast(RegisterCards.THE_35P);
+        list.addLast(RegisterCards.THE_35P);
+        list.addLast(RegisterCards.THE_35P);
+        list.addLast(RegisterCards.THE_35P);
+        list.addLast(RegisterCards.GENERAL_PC);
+        list.addLast(RegisterCards.GENERAL_PC);
+        list.addLast(RegisterCards.GENERAL_PC);
+        list.addLast(RegisterCards.GENERAL_PC);
+        list.addLast(RegisterCards.NODOKA);
+        list.addLast(RegisterCards.NODOKA);
+        list.addLast(RegisterCards.NODOKA);
+        list.addLast(RegisterCards.NODOKA);
+        list.addLast(RegisterCards.MANAGER);
+        list.addLast(RegisterCards.MANAGER);
+        list.addLast(RegisterCards.MANAGER);
+        list.addLast(RegisterCards.MANAGER);
+        list.addLast(RegisterCards.MIKORONE24);
+        list.addLast(RegisterCards.MIKORONE24);
+        list.addLast(RegisterCards.INTIMIDATION);
+        list.addLast(RegisterCards.WAIT_REQUEST);
+        baseDeck2P.setMemberCards(list);
+        List<EnumColor> list2 = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            list2.addLast(EnumColor.Red);
+        }
+        baseDeck2P.setYellCards(list2);
+
+    }
+    public void mainDeck1PShuffle(){
+        Collections.shuffle(baseDeck1P.getMemberCards());
+        labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
+        textAreaLog.append("1P main deck shuffled\n");
+    }
+    public void mainDeck2PShuffle(){
+        textAreaLog.append("2P main deck shuffled\n");
+    }
+    public void yellDeck1PShuffle(){
+        Collections.shuffle(baseDeck1P.getYellCards());
+        labelYellDeckValue1P.setText(Integer.toString(baseDeck1P.getYellCards().size()));
+        textAreaLog.append("1P yell deck shuffled\n");
+    }
+    public void yellDeck2PShuffle(){
+        textAreaLog.append("2P yell deck shuffled\n");
+    }
+    public void leaderCard1PPlace(){
+        leader1P = baseDeck1P.getLeader();
+        labelLeaderValue1P.setText("???");
+        textAreaLog.append("1P Leader card pleased\n");
+    }
+    public void leaderCard2PPlace(){
+        leader2P = baseDeck2P.getLeader();
+        labelLeaderValue2P.setText("???");
+        textAreaLog.append("2P Leader card pleased\n");
+
+    }
+    public void draw1PCard(){
+        BaseCard card = baseDeck1P.getMemberCards().getLast();
+        hand1p.add(card);
+        if (card.isMember()) {
+            MemberCard memberCard = (MemberCard) card;
+            listModel.addElement(memberCard.getCardType() + ":" + memberCard.getCardName() + ":" + memberCard.getMaxHealth());
+        } else {
+            SupportCard supportCard = (SupportCard) card;
+            listModel.addElement(supportCard.getCardType() + ":" + supportCard.getCardName());
+        }
+        baseDeck1P.getMemberCards().removeLast();
+        textAreaLog.append("1P draw 1 card\n");
+        labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
     }
 }

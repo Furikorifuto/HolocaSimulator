@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BaseDeck {
     private LeaderCard leaderCard;
-    private List<MemberCard> memberCards = new ArrayList<MemberCard>(50);
+    private List<BaseCard> memberCards = new ArrayList<BaseCard>(50);
     private List<EnumColor> yellCards = new ArrayList<EnumColor>(20);
 
     public BaseDeck(LeaderCard leader){
@@ -17,10 +17,10 @@ public class BaseDeck {
     public void setLeader(LeaderCard card){
         this.leaderCard = card;
     }
-    public List<MemberCard> getMemberCards(){
+    public List<BaseCard> getMemberCards(){
         return this.memberCards;
     }
-    public void setMemberCards(List<MemberCard> list){
+    public void setMemberCards(List<BaseCard> list){
         this.memberCards = list;
     }
     public List<EnumColor> getYellCards(){

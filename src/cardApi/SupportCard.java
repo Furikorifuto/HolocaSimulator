@@ -30,4 +30,7 @@ public class SupportCard extends BaseCard{
     public void setCardLimit(int limit) {
         this.cardLimit = limit;
     }
+    public boolean isMember() {
+        return false;
+    }
 }
