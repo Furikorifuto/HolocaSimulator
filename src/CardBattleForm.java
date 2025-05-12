@@ -16,6 +16,7 @@ public class CardBattleForm extends JFrame{
     public int count = 0;
     public int nextTime = 100;
     public Timer timer;
+    public boolean reDrawFlag = false;
     public boolean timerStopFlag = false;
     public BaseDeck baseDeck1P;
     public BaseDeck baseDeck2P;
@@ -300,7 +301,13 @@ public class CardBattleForm extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //redraw
                 if(Objects.equals(buttonCommand1.getText(), "ReDraw")){
-
+                    AllHandToDeck();
+                    mainDeck1PShuffle();
+                    count = 3;
+                    reDrawFlag = true;
+                    timerStopFlag = false;
+                    buttonCommand1.setVisible(false);
+                    buttonCommand2.setVisible(false);
                 }
             }
         });
@@ -353,13 +360,16 @@ public class CardBattleForm extends JFrame{
                             draw1PCard();
                             break;
                         case 10:
-                            buttonCommand1.setText("ReDraw");
-                            buttonCommand2.setText("Continue");
-                            buttonCommand1.setVisible(true);
-                            buttonCommand2.setVisible(true);
-                            textAreaLog.append("You can redraw\n");
-                            timerStopFlag = true;
+                            if(!reDrawFlag) {
+                                buttonCommand1.setText("ReDraw");
+                                buttonCommand2.setText("Continue");
+                                buttonCommand1.setVisible(true);
+                                buttonCommand2.setVisible(true);
+                                textAreaLog.append("You can redraw\n");
+                                timerStopFlag = true;
+                            }
                             break;
+                        case 11:
                     }
                 }
             }
@@ -528,5 +538,15 @@ public class CardBattleForm extends JFrame{
         baseDeck1P.getMemberCards().removeLast();
         textAreaLog.append("1P draw 1 card\n");
         labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
+    }
+    public void AllHandToDeck(){
+        for(int i=0;i<7;i++) {
+            BaseCard baseCard = baseDeck1P.getMemberCards().getLast();
+            baseDeck1P.getMemberCards().add(baseCard);
+            listModel.removeAllElements();
+            hand1p.removeLast();
+            textAreaLog.append("1P Puts the cards back into the deck.\n");
+            labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
+        }
     }
 }
