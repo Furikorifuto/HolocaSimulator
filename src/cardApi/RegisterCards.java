@@ -40,6 +40,13 @@ public class RegisterCards {
     public static final LeaderCard WATAME = new LeaderCard(EnumMember.Watame, EnumRecorded.EliteSpark,EnumColor.Yellow,5);
     public static final LeaderCard RISU = new LeaderCard(EnumMember.Risu, EnumRecorded.EliteSpark,EnumColor.Yellow,5);
 
+    public static final YellCard WHITE_YELL = new YellCard(EnumColor.White);
+    public static final YellCard GREEN_YELL = new YellCard(EnumColor.Green);
+    public static final YellCard RED_YELL = new YellCard(EnumColor.Red);
+    public static final YellCard BLUE_YELL = new YellCard(EnumColor.Blue);
+    public static final YellCard PURPLE_YELL = new YellCard(EnumColor.Purple);
+    public static final YellCard YELLOW_YELL = new YellCard(EnumColor.Yellow);
+
     public static final MemberCard SORA_60 = new MemberCard(EnumMember.Sora,EnumRecorded.StartDeck,EnumColor.White,EnumCardType.Debut,60,EnumCostTable.Any1);
     public static final MemberCard SORA_50 = new MemberCard(EnumMember.Sora,EnumRecorded.StartDeck,EnumColor.White,EnumCardType.Debut,50,EnumCostTable.Any1);
     public static final MemberCard SORA_150 = new MemberCard(EnumMember.Sora,EnumRecorded.StartDeck,EnumColor.White,EnumCardType.First,150,EnumCostTable.Any1);

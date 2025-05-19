@@ -52,6 +52,7 @@ public class MemberCard extends BaseCard{
     }
     public void setMaxHealth(int health){
         this.maxHealth = health;
+        this.nowHealth = health;
     }
     public int getNowHealth(){
         return nowHealth;
@@ -80,4 +81,8 @@ public class MemberCard extends BaseCard{
         this.changeCost = cost;
     }
 
+    @Override
+    public String toString() {
+        return cardMember+" "+getCardType().toString()+" "+nowHealth+"/"+maxHealth;
+    }
 }
