@@ -33,4 +33,9 @@ public class SupportCard extends BaseCard{
     public boolean isMember() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return getCardName();
+    }
 }

@@ -15,7 +15,10 @@ import java.util.Objects;
 public class CardBattleForm extends JFrame{
     public int count = 0;
     public int nextTime = 100;
+    public int maxDraw_1P = 6;
+    public int maxDraw_2P = 6;
     public Timer timer;
+    public boolean reDrawFlag = false;
     public boolean timerStopFlag = false;
     public BaseDeck baseDeck1P;
     public BaseDeck baseDeck2P;
@@ -23,6 +26,21 @@ public class CardBattleForm extends JFrame{
     public LeaderCard leader1P;
     public LeaderCard leader2P;
     public List<BaseCard> hand1p = new ArrayList<>();
+    public List<BaseCard> hand2p = new ArrayList<>();
+    public MemberCard center1P;
+    public MemberCard center2P;
+    public MemberCard collab1P;
+    public MemberCard collab2P;
+    public MemberCard back1_1P;
+    public MemberCard back1_2P;
+    public MemberCard back2_1P;
+    public MemberCard back2_2P;
+    public MemberCard back3_1P;
+    public MemberCard back3_2P;
+    public MemberCard back4_1P;
+    public MemberCard back4_2P;
+    public MemberCard back5_1P;
+    public MemberCard back5_2P;
     //swing
     public JPanel panelStatus1P = new JPanel(null);
     public JLabel labelLife1P = new JLabel("Life");
@@ -88,8 +106,8 @@ public class CardBattleForm extends JFrame{
     public JLabel labelBack52P = new JLabel("Back-5");
     public JLabel labelBack5Value2P = new JLabel();
 
-    public DefaultListModel<String> listModel = new DefaultListModel<>();
-    public JList<String> listHand = new JList<>(listModel);
+    public DefaultListModel<BaseCard> listModel = new DefaultListModel<>();
+    public JList<BaseCard> listHand = new JList<>(listModel);
     public JScrollPane scrollPaneHand = new JScrollPane(listHand);
 
     public JPanel panelAction = new JPanel();
@@ -97,16 +115,12 @@ public class CardBattleForm extends JFrame{
     public JButton buttonCommand2 = new JButton("command2");
     public JButton buttonCommand3 = new JButton("command3");
     public JButton buttonCommand4 = new JButton("command4");
-
     public JTextArea textAreaCard = new JTextArea();
     public JScrollPane scrollPaneCard = new JScrollPane(textAreaCard);
-
     public JTextArea textAreaLog = new JTextArea();
     public JScrollPane scrollPaneLog = new JScrollPane(textAreaLog);
-
     public JPanel panelOption = new JPanel();
     public JButton buttonOption = new JButton("Next");
-
     public JPanel panel = new JPanel();
 
     public CardBattleForm() {
@@ -300,14 +314,24 @@ public class CardBattleForm extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //redraw
                 if(Objects.equals(buttonCommand1.getText(), "ReDraw")){
-
+                    AllHandToDeck1P();
+                    mainDeck1PShuffle();
+                    count = 3;
+                    reDrawFlag = true;
+                    timerStopFlag = false;
+                    buttonCommand1.setVisible(false);
+                    buttonCommand2.setVisible(false);
                 }
             }
         });
         buttonCommand2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if(Objects.equals(buttonCommand2.getText(), "Continue")){
+                    timerStopFlag = false;
+                    buttonCommand1.setVisible(false);
+                    buttonCommand2.setVisible(false);
+                }
                 
             }
         });
@@ -315,7 +339,6 @@ public class CardBattleForm extends JFrame{
         scrollPaneLog.setBorder(new TitledBorder("Battle Log"));
         scrollPaneLog.setBounds(160, 285, 305, 150);
         this.add(scrollPaneLog);
-
 
         panelOption.setBorder(new TitledBorder("Option"));
         panelOption.setBounds(470, 285, 150, 150);
@@ -353,11 +376,30 @@ public class CardBattleForm extends JFrame{
                             draw1PCard();
                             break;
                         case 10:
-                            buttonCommand1.setText("ReDraw");
-                            buttonCommand2.setText("Continue");
-                            buttonCommand1.setVisible(true);
-                            buttonCommand2.setVisible(true);
-                            textAreaLog.append("You can redraw\n");
+                            if(!reDrawFlag) {
+                                buttonCommand1.setText("ReDraw");
+                                buttonCommand2.setText("Continue");
+                                buttonCommand1.setVisible(true);
+                                buttonCommand2.setVisible(true);
+                                textAreaLog.append("You can redraw\n");
+                                timerStopFlag = true;
+                            }
+                            break;
+                        case 11:
+                            reDrawFlag = true;
+                            buttonCommand1.setVisible(false);
+                            buttonCommand2.setVisible(false);
+                            if(!hasDebutInHand1P()){
+                                textAreaLog.append("You hava not debut card\n");
+                                if(maxDraw_1P>0){
+                                    maxDraw_1P--;
+                                }
+                                count = 9 - maxDraw_1P;
+                                AllHandToDeck1P();
+                                mainDeck1PShuffle();
+                            }
+                            break;
+                        case 12:
                             timerStopFlag = true;
                             break;
                     }
@@ -494,6 +536,8 @@ public class CardBattleForm extends JFrame{
         textAreaLog.append("1P main deck shuffled\n");
     }
     public void mainDeck2PShuffle(){
+        Collections.shuffle(baseDeck2P.getMemberCards());
+        labelMainDeckValue2P.setText(Integer.toString(baseDeck2P.getMemberCards().size()));
         textAreaLog.append("2P main deck shuffled\n");
     }
     public void yellDeck1PShuffle(){
@@ -502,6 +546,8 @@ public class CardBattleForm extends JFrame{
         textAreaLog.append("1P yell deck shuffled\n");
     }
     public void yellDeck2PShuffle(){
+        Collections.shuffle(baseDeck2P.getYellCards());
+        labelYellDeckValue2P.setText(Integer.toString(baseDeck2P.getYellCards().size()));
         textAreaLog.append("2P yell deck shuffled\n");
     }
     public void leaderCard1PPlace(){
@@ -520,13 +566,40 @@ public class CardBattleForm extends JFrame{
         hand1p.add(card);
         if (card.isMember()) {
             MemberCard memberCard = (MemberCard) card;
-            listModel.addElement(memberCard.getCardType() + ":" + memberCard.getCardName() + ":" + memberCard.getMaxHealth());
+            listModel.addElement(memberCard);
         } else {
             SupportCard supportCard = (SupportCard) card;
-            listModel.addElement(supportCard.getCardType() + ":" + supportCard.getCardName());
+            listModel.addElement(supportCard);
         }
         baseDeck1P.getMemberCards().removeLast();
         textAreaLog.append("1P draw 1 card\n");
+        labelHandValue1P.setText(String.valueOf(hand1p.size()));
         labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
+    }
+    public void draw2PCard(){
+        BaseCard card = baseDeck2P.getMemberCards().getLast();
+        hand2p.add(card);
+        baseDeck2P.getMemberCards().removeLast();
+        textAreaLog.append("2P draw 1 card\n");
+        labelHandValue2P.setText(String.valueOf(hand2p.size()));
+        labelMainDeckValue2P.setText(Integer.toString(baseDeck2P.getMemberCards().size()));
+    }
+    public void AllHandToDeck1P(){
+        for(int i=0;i<hand1p.size();) {
+            BaseCard baseCard = baseDeck1P.getMemberCards().getLast();
+            baseDeck1P.getMemberCards().add(baseCard);
+            listModel.remove(hand1p.size()-1);
+            hand1p.removeLast();
+            textAreaLog.append("1P Puts the cards back into the deck.\n");
+            labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
+        }
+    }
+    public boolean hasDebutInHand1P(){
+        for (BaseCard baseCard : hand1p) {
+            if (baseCard.getCardType() == EnumCardType.Debut) {
+                return true;
+            }
+        }
+        return false;
     }
 }
