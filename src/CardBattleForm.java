@@ -31,16 +31,8 @@ public class CardBattleForm extends JFrame{
     public MemberCard center2P;
     public MemberCard collab1P;
     public MemberCard collab2P;
-    public MemberCard back1_1P;
-    public MemberCard back1_2P;
-    public MemberCard back2_1P;
-    public MemberCard back2_2P;
-    public MemberCard back3_1P;
-    public MemberCard back3_2P;
-    public MemberCard back4_1P;
-    public MemberCard back4_2P;
-    public MemberCard back5_1P;
-    public MemberCard back5_2P;
+    public MemberCard[] back_1P;
+    public MemberCard[] back_2P;
     //swing
     public JPanel panelStatus1P = new JPanel(null);
     public JLabel labelLife1P = new JLabel("Life");
@@ -407,7 +399,6 @@ public class CardBattleForm extends JFrame{
             }
         });
         timer.start();
-
     }
     public void mainDeck1PCreate() {
         baseDeck1P = new BaseDeck(RegisterCards.LUNA);
@@ -463,9 +454,9 @@ public class CardBattleForm extends JFrame{
         list.addLast(RegisterCards.LUKNIGHT);
         list.addLast(RegisterCards.LUKNIGHT);
         baseDeck1P.setMemberCards(list);
-        List<EnumColor> list2 = new ArrayList<>();
+        List<YellCard> list2 = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            list2.addLast(EnumColor.White);
+            list2.addLast(RegisterCards.WHITE_YELL);
         }
         baseDeck1P.setYellCards(list2);
     }
@@ -523,9 +514,9 @@ public class CardBattleForm extends JFrame{
         list.addLast(RegisterCards.INTIMIDATION);
         list.addLast(RegisterCards.WAIT_REQUEST);
         baseDeck2P.setMemberCards(list);
-        List<EnumColor> list2 = new ArrayList<>();
+        List<YellCard> list2 = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            list2.addLast(EnumColor.Red);
+            list2.addLast(RegisterCards.RED_YELL);
         }
         baseDeck2P.setYellCards(list2);
 
