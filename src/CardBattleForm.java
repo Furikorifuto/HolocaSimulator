@@ -13,13 +13,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class CardBattleForm extends JFrame{
-    public int count = 0;
+    public String count = "start";
     public int nextTime = 100;
-    public int maxDraw_1P = 6;
-    public int maxDraw_2P = 6;
     public Timer timer;
     public boolean reDrawFlag = false;
     public boolean timerStopFlag = false;
+    public boolean is2p = false;
     public BaseDeck baseDeck1P;
     public BaseDeck baseDeck2P;
     //stage
@@ -314,9 +313,13 @@ public class CardBattleForm extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //redraw
                 if(Objects.equals(buttonCommand1.getText(), "ReDraw")){
-                    AllHandToDeck1P();
-                    mainDeck1PShuffle();
-                    count = 3;
+                    if(is2p) {
+                        AllHandToDeck(true);
+                        mainDeckShuffle(true);
+                    }else{
+                        AllHandToDeck(false);
+                        mainDeckShuffle(false);
+                    }
                     reDrawFlag = true;
                     timerStopFlag = false;
                     buttonCommand1.setVisible(false);
@@ -332,7 +335,6 @@ public class CardBattleForm extends JFrame{
                     buttonCommand1.setVisible(false);
                     buttonCommand2.setVisible(false);
                 }
-                
             }
         });
         textAreaLog.setEditable(false);
@@ -353,61 +355,35 @@ public class CardBattleForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!timerStopFlag){
-                    switch (count++) {
-                        case 0:
-                            mainDeck1PShuffle();
-                            mainDeck2PShuffle();
+                    switch (count) {
+                        case "start":
+                            mainDeckShuffle(false);
+                            mainDeckShuffle(true);
+                            yellDeckShuffle(false);
+                            yellDeckShuffle(true);
+                            leaderCardPlace();
+                            drawCard(false,7);
+                            drawCard(true,7);
+                            setCount(1000,"firstDraw");
                             break;
-                        case 1:
-                            yellDeck1PShuffle();
-                            yellDeck2PShuffle();
-                            break;
-                        case 2:
-                            leaderCard1PPlace();
-                            leaderCard2PPlace();
-                            break;
-                        case 3:
-                        case 4:
-                        case 5:
-                        case 6:
-                        case 7:
-                        case 8:
-                        case 9:
-                            draw1PCard();
-                            break;
-                        case 10:
-                            if(!reDrawFlag) {
-                                buttonCommand1.setText("ReDraw");
-                                buttonCommand2.setText("Continue");
-                                buttonCommand1.setVisible(true);
-                                buttonCommand2.setVisible(true);
-                                textAreaLog.append("You can redraw\n");
-                                timerStopFlag = true;
+                        case "reDraw":
+                            while (!hasDebutInHand(true)) {
+                                AllHandToDeck(true);
+                                drawCard(true,7);
                             }
-                            break;
-                        case 11:
-                            reDrawFlag = true;
-                            buttonCommand1.setVisible(false);
-                            buttonCommand2.setVisible(false);
-                            if(!hasDebutInHand1P()){
-                                textAreaLog.append("You hava not debut card\n");
-                                if(maxDraw_1P>0){
-                                    maxDraw_1P--;
-                                }
-                                count = 9 - maxDraw_1P;
-                                AllHandToDeck1P();
-                                mainDeck1PShuffle();
+                            while (!hasDebutInHand(false)) {
+                                AllHandToDeck(false);
+                                drawCard(false,7);
                             }
+                            setCount(1000,"placeDebutCard");
                             break;
-                        case 12:
-                            timerStopFlag = true;
+                        case "placeDebutCard":
                             break;
                     }
                 }
             }
         });
         timer.start();
-
     }
     public void mainDeck1PCreate() {
         baseDeck1P = new BaseDeck(RegisterCards.LUNA);
@@ -530,76 +506,113 @@ public class CardBattleForm extends JFrame{
         baseDeck2P.setYellCards(list2);
 
     }
-    public void mainDeck1PShuffle(){
-        Collections.shuffle(baseDeck1P.getMemberCards());
-        labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
-        textAreaLog.append("1P main deck shuffled\n");
+    public void setCount(int timeCount,String key){
+        nextTime = timeCount;
+        count = key;
     }
-    public void mainDeck2PShuffle(){
-        Collections.shuffle(baseDeck2P.getMemberCards());
-        labelMainDeckValue2P.setText(Integer.toString(baseDeck2P.getMemberCards().size()));
-        textAreaLog.append("2P main deck shuffled\n");
+    public void mainDeckShuffle(boolean flag2P){
+        if(flag2P) {
+            Collections.shuffle(baseDeck2P.getMemberCards());
+            labelMainDeckValue2P.setText(Integer.toString(baseDeck2P.getMemberCards().size()));
+            textAreaLog.append("2P main deck shuffled\n");
+        }else {
+            Collections.shuffle(baseDeck1P.getMemberCards());
+            labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
+            textAreaLog.append("1P main deck shuffled\n");
+        }
     }
-    public void yellDeck1PShuffle(){
-        Collections.shuffle(baseDeck1P.getYellCards());
-        labelYellDeckValue1P.setText(Integer.toString(baseDeck1P.getYellCards().size()));
-        textAreaLog.append("1P yell deck shuffled\n");
+    public void yellDeckShuffle(boolean flag2P){
+        if(flag2P) {
+            Collections.shuffle(baseDeck2P.getYellCards());
+            labelYellDeckValue2P.setText(Integer.toString(baseDeck2P.getYellCards().size()));
+            textAreaLog.append("2P yell deck shuffled\n");
+        }else {
+            Collections.shuffle(baseDeck1P.getYellCards());
+            labelYellDeckValue1P.setText(Integer.toString(baseDeck1P.getYellCards().size()));
+            textAreaLog.append("1P yell deck shuffled\n");
+        }
     }
-    public void yellDeck2PShuffle(){
-        Collections.shuffle(baseDeck2P.getYellCards());
-        labelYellDeckValue2P.setText(Integer.toString(baseDeck2P.getYellCards().size()));
-        textAreaLog.append("2P yell deck shuffled\n");
-    }
-    public void leaderCard1PPlace(){
+    public void leaderCardPlace(){
         leader1P = baseDeck1P.getLeader();
         labelLeaderValue1P.setText("???");
         textAreaLog.append("1P Leader card pleased\n");
-    }
-    public void leaderCard2PPlace(){
         leader2P = baseDeck2P.getLeader();
         labelLeaderValue2P.setText("???");
         textAreaLog.append("2P Leader card pleased\n");
-
     }
-    public void draw1PCard(){
-        BaseCard card = baseDeck1P.getMemberCards().getLast();
-        hand1p.add(card);
-        if (card.isMember()) {
-            MemberCard memberCard = (MemberCard) card;
-            listModel.addElement(memberCard);
-        } else {
-            SupportCard supportCard = (SupportCard) card;
-            listModel.addElement(supportCard);
+    public void drawCard(boolean flag2,int cards){
+        for(int i=0;i<cards;i++) {
+            if (flag2) {
+                BaseCard card = baseDeck2P.getMemberCards().getLast();
+                hand2p.add(card);
+                if (card.isMember()) {
+                    MemberCard memberCard = (MemberCard) card;
+                    listModel.addElement(memberCard);
+                } else {
+                    SupportCard supportCard = (SupportCard) card;
+                    listModel.addElement(supportCard);
+                }
+                baseDeck2P.getMemberCards().removeLast();
+                textAreaLog.append("2P draw 1 card\n");
+                labelHandValue2P.setText(String.valueOf(hand2p.size()));
+                labelMainDeckValue2P.setText(Integer.toString(baseDeck2P.getMemberCards().size()));
+            } else {
+                BaseCard card = baseDeck1P.getMemberCards().getLast();
+                hand1p.add(card);
+                if (card.isMember()) {
+                    MemberCard memberCard = (MemberCard) card;
+                    listModel.addElement(memberCard);
+                } else {
+                    SupportCard supportCard = (SupportCard) card;
+                    listModel.addElement(supportCard);
+                }
+                baseDeck1P.getMemberCards().removeLast();
+                textAreaLog.append("1P draw 1 card\n");
+                labelHandValue1P.setText(String.valueOf(hand1p.size()));
+                labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
+            }
         }
-        baseDeck1P.getMemberCards().removeLast();
-        textAreaLog.append("1P draw 1 card\n");
-        labelHandValue1P.setText(String.valueOf(hand1p.size()));
-        labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
     }
-    public void draw2PCard(){
-        BaseCard card = baseDeck2P.getMemberCards().getLast();
-        hand2p.add(card);
-        baseDeck2P.getMemberCards().removeLast();
-        textAreaLog.append("2P draw 1 card\n");
-        labelHandValue2P.setText(String.valueOf(hand2p.size()));
-        labelMainDeckValue2P.setText(Integer.toString(baseDeck2P.getMemberCards().size()));
-    }
-    public void AllHandToDeck1P(){
-        for(int i=0;i<hand1p.size();) {
-            BaseCard baseCard = baseDeck1P.getMemberCards().getLast();
-            baseDeck1P.getMemberCards().add(baseCard);
-            listModel.remove(hand1p.size()-1);
-            hand1p.removeLast();
-            textAreaLog.append("1P Puts the cards back into the deck.\n");
-            labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
+    public void AllHandToDeck(boolean flag2P){
+        if(flag2P) {
+            for (int i = 0; i < hand2p.size(); ) {
+                BaseCard baseCard = baseDeck2P.getMemberCards().getLast();
+                baseDeck2P.getMemberCards().add(baseCard);
+                listModel.remove(hand2p.size() - 1);
+                hand2p.removeLast();
+                textAreaLog.append("2P Puts the cards back into the deck.\n");
+                labelMainDeckValue2P.setText(Integer.toString(baseDeck2P.getMemberCards().size()));
+            }
+        }else {
+            for (int i = 0; i < hand1p.size(); ) {
+                BaseCard baseCard = baseDeck1P.getMemberCards().getLast();
+                baseDeck1P.getMemberCards().add(baseCard);
+                listModel.remove(hand1p.size() - 1);
+                hand1p.removeLast();
+                textAreaLog.append("1P Puts the cards back into the deck.\n");
+                labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
+            }
         }
     }
-    public boolean hasDebutInHand1P(){
-        for (BaseCard baseCard : hand1p) {
-            if (baseCard.getCardType() == EnumCardType.Debut) {
-                return true;
+    public boolean hasDebutInHand(boolean flag2P) {
+        if (flag2P) {
+            for (BaseCard baseCard : hand2p) {
+                if (baseCard.getCardType() == EnumCardType.Debut) {
+                    return true;
+                }
+            }
+        }else {
+            for (BaseCard baseCard : hand1p) {
+                if (baseCard.getCardType() == EnumCardType.Debut) {
+                    return true;
+                }
             }
         }
         return false;
     }
+
+
+
+
+
 }
