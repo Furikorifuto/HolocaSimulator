@@ -97,9 +97,13 @@ public class CardBattleForm extends JFrame{
     public JLabel labelBack52P = new JLabel("Back-5");
     public JLabel labelBack5Value2P = new JLabel();
 
-    public DefaultListModel<BaseCard> listModel = new DefaultListModel<>();
-    public JList<BaseCard> listHand = new JList<>(listModel);
-    public JScrollPane scrollPaneHand = new JScrollPane(listHand);
+    public DefaultListModel<BaseCard> listModel1 = new DefaultListModel<>();
+    public JList<BaseCard> listHand1 = new JList<>(listModel1);
+    public JScrollPane scrollPane1PHand = new JScrollPane(listHand1);
+
+    public DefaultListModel<BaseCard> listModel2 = new DefaultListModel<>();
+    public JList<BaseCard> listHand2 = new JList<>(listModel2);
+    public JScrollPane scrollPane2PHand = new JScrollPane(listHand2);
 
     public JPanel panelAction = new JPanel();
     public JButton buttonCommand1 = new JButton("command1");
@@ -110,8 +114,6 @@ public class CardBattleForm extends JFrame{
     public JScrollPane scrollPaneCard = new JScrollPane(textAreaCard);
     public JTextArea textAreaLog = new JTextArea();
     public JScrollPane scrollPaneLog = new JScrollPane(textAreaLog);
-    public JPanel panelOption = new JPanel();
-    public JButton buttonOption = new JButton("Next");
     public JPanel panel = new JPanel();
 
     public CardBattleForm() {
@@ -279,9 +281,13 @@ public class CardBattleForm extends JFrame{
         panelStage2P.add(labelBack5Value2P);
         this.add(panelStage2P);
 
-        scrollPaneHand.setBorder(new TitledBorder("Hand"));
-        scrollPaneHand.setBounds(5, 285, 150, 150);
-        this.add(scrollPaneHand);
+        scrollPane1PHand.setBorder(new TitledBorder("1P Hand"));
+        scrollPane1PHand.setBounds(5, 285, 150, 150);
+        this.add(scrollPane1PHand);
+
+        scrollPane2PHand.setBorder(new TitledBorder("2P Hand"));
+        scrollPane2PHand.setBounds(470, 285, 150, 150);
+        this.add(scrollPane2PHand);
 
         textAreaCard.setEditable(false);
         scrollPaneCard.setBorder(new TitledBorder("Card Status"));
@@ -333,11 +339,6 @@ public class CardBattleForm extends JFrame{
         scrollPaneLog.setBorder(new TitledBorder("Battle Log"));
         scrollPaneLog.setBounds(160, 285, 305, 150);
         this.add(scrollPaneLog);
-
-        panelOption.setBorder(new TitledBorder("Option"));
-        panelOption.setBounds(470, 285, 150, 150);
-        panelOption.add(buttonOption);
-        this.add(panelOption);
         this.add(panel);
 
         this.setLocationRelativeTo(null);
@@ -351,14 +352,20 @@ public class CardBattleForm extends JFrame{
                         case "start":
                             mainDeckShuffle(false);
                             mainDeckShuffle(true);
+                            setCount(100,"yellShuffle",false);
+                            break;
+                        case "yellShuffle":
                             yellDeckShuffle(false);
                             yellDeckShuffle(true);
+                            setCount(100,"leaderPlace",false);
+                            break;
+                        case "leaderPlace":
                             leaderCardPlace();
+                            setCount(100,"firstDraw",false);
+                            break;
+                        case "firstDraw":
                             drawCard(false,7);
                             drawCard(true,7);
-                            setCount(1000,"firstDraw");
-                            break;
-                        case "reDraw":
                             while (!hasDebutInHand(true)) {
                                 AllHandToDeck(true);
                                 drawCard(true,7);
@@ -367,7 +374,7 @@ public class CardBattleForm extends JFrame{
                                 AllHandToDeck(false);
                                 drawCard(false,7);
                             }
-                            setCount(1000,"placeDebutCard");
+                            setCount(100,"placeDebutCard",true);
                             break;
                         case "placeDebutCard":
                             break;
@@ -498,9 +505,10 @@ public class CardBattleForm extends JFrame{
         baseDeck2P.setYellCards(list2);
 
     }
-    public void setCount(int timeCount,String key){
+    public void setCount(int timeCount,String key,boolean stopFlag){
         nextTime = timeCount;
         count = key;
+        timerStopFlag = stopFlag;
     }
     public void mainDeckShuffle(boolean flag2P){
         if(flag2P) {
@@ -524,6 +532,7 @@ public class CardBattleForm extends JFrame{
             textAreaLog.append("1P yell deck shuffled\n");
         }
     }
+
     public void leaderCardPlace(){
         leader1P = baseDeck1P.getLeader();
         labelLeaderValue1P.setText("???");
@@ -539,10 +548,10 @@ public class CardBattleForm extends JFrame{
                 hand2p.add(card);
                 if (card.isMember()) {
                     MemberCard memberCard = (MemberCard) card;
-                    listModel.addElement(memberCard);
+                    listModel2.addElement(memberCard);
                 } else {
                     SupportCard supportCard = (SupportCard) card;
-                    listModel.addElement(supportCard);
+                    listModel2.addElement(supportCard);
                 }
                 baseDeck2P.getMemberCards().removeLast();
                 textAreaLog.append("2P draw 1 card\n");
@@ -553,10 +562,10 @@ public class CardBattleForm extends JFrame{
                 hand1p.add(card);
                 if (card.isMember()) {
                     MemberCard memberCard = (MemberCard) card;
-                    listModel.addElement(memberCard);
+                    listModel1.addElement(memberCard);
                 } else {
                     SupportCard supportCard = (SupportCard) card;
-                    listModel.addElement(supportCard);
+                    listModel1.addElement(supportCard);
                 }
                 baseDeck1P.getMemberCards().removeLast();
                 textAreaLog.append("1P draw 1 card\n");
@@ -570,7 +579,7 @@ public class CardBattleForm extends JFrame{
             for (int i = 0; i < hand2p.size(); ) {
                 BaseCard baseCard = baseDeck2P.getMemberCards().getLast();
                 baseDeck2P.getMemberCards().add(baseCard);
-                listModel.remove(hand2p.size() - 1);
+                listModel2.remove(hand2p.size() - 1);
                 hand2p.removeLast();
                 textAreaLog.append("2P Puts the cards back into the deck.\n");
                 labelMainDeckValue2P.setText(Integer.toString(baseDeck2P.getMemberCards().size()));
@@ -579,7 +588,7 @@ public class CardBattleForm extends JFrame{
             for (int i = 0; i < hand1p.size(); ) {
                 BaseCard baseCard = baseDeck1P.getMemberCards().getLast();
                 baseDeck1P.getMemberCards().add(baseCard);
-                listModel.remove(hand1p.size() - 1);
+                listModel1.remove(hand1p.size() - 1);
                 hand1p.removeLast();
                 textAreaLog.append("1P Puts the cards back into the deck.\n");
                 labelMainDeckValue1P.setText(Integer.toString(baseDeck1P.getMemberCards().size()));
