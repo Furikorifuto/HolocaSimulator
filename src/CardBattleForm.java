@@ -3,14 +3,12 @@
 import cardApi.*;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class CardBattleForm extends JFrame{
     public String count = "start";
@@ -21,6 +19,7 @@ public class CardBattleForm extends JFrame{
     public boolean is2p = false;
     public BaseDeck baseDeck1P;
     public BaseDeck baseDeck2P;
+    public boolean preceding1pFlag;
     //stage
     public LeaderCard leader1P;
     public LeaderCard leader2P;
@@ -281,10 +280,13 @@ public class CardBattleForm extends JFrame{
         panelStage2P.add(labelBack5Value2P);
         this.add(panelStage2P);
 
+        listHand1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane1PHand.setBorder(new TitledBorder("1P Hand"));
         scrollPane1PHand.setBounds(5, 285, 150, 150);
         this.add(scrollPane1PHand);
 
+
+        listHand2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane2PHand.setBorder(new TitledBorder("2P Hand"));
         scrollPane2PHand.setBounds(470, 285, 150, 150);
         this.add(scrollPane2PHand);
@@ -305,6 +307,15 @@ public class CardBattleForm extends JFrame{
         panelAction.add(buttonCommand3);
         panelAction.add(buttonCommand4);
         this.add(panelAction);
+
+        textAreaLog.setEditable(false);
+        scrollPaneLog.setBorder(new TitledBorder("Battle Log"));
+        scrollPaneLog.setBounds(160, 285, 305, 150);
+        this.add(scrollPaneLog);
+        this.add(panel);
+
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
         buttonCommand1.addActionListener(new ActionListener() {
             @Override
@@ -335,14 +346,8 @@ public class CardBattleForm extends JFrame{
                 }
             }
         });
-        textAreaLog.setEditable(false);
-        scrollPaneLog.setBorder(new TitledBorder("Battle Log"));
-        scrollPaneLog.setBounds(160, 285, 305, 150);
-        this.add(scrollPaneLog);
-        this.add(panel);
 
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+
 
         timer = new Timer(nextTime, new ActionListener() {
             @Override
@@ -361,6 +366,16 @@ public class CardBattleForm extends JFrame{
                             break;
                         case "leaderPlace":
                             leaderCardPlace();
+                            setCount(100,"setPreceding",false);
+                            break;
+                        case "setPreceding":
+                            Random random = new Random();
+                            preceding1pFlag = random.nextBoolean();
+                            if(preceding1pFlag){
+                                textAreaLog.append("1P is preceding.\n");
+                            }else {
+                                textAreaLog.append("2P is preceding.\n");
+                            }
                             setCount(100,"firstDraw",false);
                             break;
                         case "firstDraw":
@@ -374,9 +389,9 @@ public class CardBattleForm extends JFrame{
                                 AllHandToDeck(false);
                                 drawCard(false,7);
                             }
-                            setCount(100,"placeDebutCard",true);
+                            setCount(100,"placeDebutCard1P",true);
                             break;
-                        case "placeDebutCard":
+                        case "placeDebutCard1P":
                             break;
                     }
                 }
