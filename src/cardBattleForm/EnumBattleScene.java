@@ -1,0 +1,20 @@
+package cardBattleForm;
+
+public enum EnumBattleScene {
+    LOAD_DECK,
+    MAIN_DECK_SHUFFLE,
+    YELL_DECK_SHUFFLE,
+    LEADER_CARD_PLACE,
+    PRECEDING_SET,
+    FIRST_DRAW,
+    SECOND_DRAW,
+    PLACE_CENTER,
+    PLACE_BACK,
+    PLACE_LIFE,
+    RESET_STEP,
+    HAND_STEP,
+    YELL_STEP,
+    MAIN_STEP,
+    ATTACK_STEP,
+    END_STEP
+}
