@@ -1,4 +1,4 @@
-import cardBattleForm.CardBattleForm;
+import cardBattleForm.*;
 
 public class Main {
 
