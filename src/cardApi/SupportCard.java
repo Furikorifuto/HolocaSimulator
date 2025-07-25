@@ -1,8 +1,13 @@
 package cardApi;
 
 public class SupportCard extends BaseCard{
+<<<<<<< Updated upstream
     private boolean LimitedFlag;
     private int cardLimit;
+=======
+    public SupportCard(String name, CardType type, Recorded recorded) {
+        super(name,type,recorded, CardColor.None);
+>>>>>>> Stashed changes
 
     public SupportCard(String name, EnumRecorded recorded, EnumCardType type,boolean limited) {
         super(name,recorded,type,EnumColor.None);

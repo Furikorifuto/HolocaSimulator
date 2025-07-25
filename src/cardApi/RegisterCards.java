@@ -4,42 +4,43 @@ package cardApi;
 //デッキデータはリーダー(8bit)(アドレス$00)、エールデッキ(8bit)(アドレス$01-$15)、メインデッキ(16bit)(アドレス$16-)、で取り出す。
 
 public class RegisterCards {
-    public static final LeaderCard MUMEI_SD = new LeaderCard(EnumMember.Mumei,EnumRecorded.StartDeck,EnumColor.White,5);
-    public static final LeaderCard PEKORA_SD = new LeaderCard(EnumMember.Pekora,EnumRecorded.StartDeck,EnumColor.Green,5);
-    public static final LeaderCard KIARA_SD = new LeaderCard(EnumMember.Kiara,EnumRecorded.StartDeck,EnumColor.Red,5);
-    public static final LeaderCard SUISEI_SD = new LeaderCard(EnumMember.Suisei,EnumRecorded.StartDeck,EnumColor.Blue,5);
-    public static final LeaderCard SORA = new LeaderCard(EnumMember.Sora,EnumRecorded.StartDeck,EnumColor.White,5);
-    public static final LeaderCard AZKI = new LeaderCard(EnumMember.Azki,EnumRecorded.StartDeck,EnumColor.Green,6);
-    public static final LeaderCard KANATA = new LeaderCard(EnumMember.Kanata,EnumRecorded.BloomingRadiance,EnumColor.White,5);
-    public static final LeaderCard MUMEI_BR = new LeaderCard(EnumMember.Mumei, EnumRecorded.BloomingRadiance,EnumColor.White,5);
-    public static final LeaderCard AKIROSE = new LeaderCard(EnumMember.Akirose, EnumRecorded.BloomingRadiance,EnumColor.Green,5);
-    public static final LeaderCard PEKORA_BR = new LeaderCard(EnumMember.Pekora, EnumRecorded.BloomingRadiance,EnumColor.Green,6);
-    public static final LeaderCard LUI = new LeaderCard(EnumMember.Lui, EnumRecorded.BloomingRadiance,EnumColor.Red,5);
-    public static final LeaderCard KIARA_BR = new LeaderCard(EnumMember.Kiara, EnumRecorded.BloomingRadiance,EnumColor.Red,5);
-    public static final LeaderCard SUISEI_BR = new LeaderCard(EnumMember.Suisei, EnumRecorded.BloomingRadiance,EnumColor.Blue,5);
-    public static final LeaderCard KOBO = new LeaderCard(EnumMember.Kobo, EnumRecorded.BloomingRadiance,EnumColor.Blue,6);
-    public static final LeaderCard CHOCO = new LeaderCard(EnumMember.Choco, EnumRecorded.StartDeck,EnumColor.Purple,5);
-    public static final LeaderCard OKAYU = new LeaderCard(EnumMember.Okayu, EnumRecorded.StartDeck,EnumColor.Blue,5);
-    public static final LeaderCard AYAME = new LeaderCard(EnumMember.Ayame, EnumRecorded.StartDeck,EnumColor.Red,5);
-    public static final LeaderCard FUBUKI = new LeaderCard(EnumMember.Fubuki, EnumRecorded.QuintetSpectrum,EnumColor.White,5);
-    public static final LeaderCard REINE = new LeaderCard(EnumMember.Reine, EnumRecorded.QuintetSpectrum,EnumColor.Green,5);
-    public static final LeaderCard MARINE = new LeaderCard(EnumMember.Marine, EnumRecorded.QuintetSpectrum,EnumColor.Red,5);
-    public static final LeaderCard CHLOE = new LeaderCard(EnumMember.Chloe, EnumRecorded.QuintetSpectrum,EnumColor.Blue,6);
-    public static final LeaderCard SHION = new LeaderCard(EnumMember.Shion, EnumRecorded.QuintetSpectrum,EnumColor.Purple,5);
-    public static final LeaderCard OLLIE = new LeaderCard(EnumMember.Ollie, EnumRecorded.QuintetSpectrum,EnumColor.Purple,5);
-    public static final LeaderCard CALLI = new LeaderCard(EnumMember.Calli, EnumRecorded.QuintetSpectrum,EnumColor.Purple,5);
-    public static final LeaderCard FLARE = new LeaderCard(EnumMember.Flare, EnumRecorded.StartDeck,EnumColor.Yellow,5);
-    public static final LeaderCard IROHA = new LeaderCard(EnumMember.Iroha, EnumRecorded.StartDeck,EnumColor.Green,5);
-    public static final LeaderCard HAJIME = new LeaderCard(EnumMember.Hajime, EnumRecorded.StartDeck,EnumColor.White,5);
-    public static final LeaderCard LUNA = new LeaderCard(EnumMember.Luna, EnumRecorded.EliteSpark,EnumColor.White,5);
-    public static final LeaderCard BOTAN = new LeaderCard(EnumMember.Botan, EnumRecorded.EliteSpark,EnumColor.Green,5);
-    public static final LeaderCard MIKO = new LeaderCard(EnumMember.Miko, EnumRecorded.EliteSpark,EnumColor.Red,5);
-    public static final LeaderCard FUWAMOCO = new LeaderCard(EnumMember.FuwaMoco, EnumRecorded.EliteSpark,EnumColor.Blue,5);
-    public static final LeaderCard TOWA = new LeaderCard(EnumMember.Towa, EnumRecorded.EliteSpark,EnumColor.Purple,5);
-    public static final LeaderCard KORONE = new LeaderCard(EnumMember.Korone, EnumRecorded.EliteSpark,EnumColor.Yellow,6);
-    public static final LeaderCard WATAME = new LeaderCard(EnumMember.Watame, EnumRecorded.EliteSpark,EnumColor.Yellow,5);
-    public static final LeaderCard RISU = new LeaderCard(EnumMember.Risu, EnumRecorded.EliteSpark,EnumColor.Yellow,5);
+    public static final LeaderCard MUMEI_SD = new LeaderCard(Member.Mumei, Recorded.StartDeck, CardColor.White,5);
+    public static final LeaderCard PEKORA_SD = new LeaderCard(Member.Pekora, Recorded.StartDeck, CardColor.Green,5);
+    public static final LeaderCard KIARA_SD = new LeaderCard(Member.Kiara, Recorded.StartDeck, CardColor.Red,5);
+    public static final LeaderCard SUISEI_SD = new LeaderCard(Member.Suisei, Recorded.StartDeck, CardColor.Blue,5);
+    public static final LeaderCard SORA = new LeaderCard(Member.Sora, Recorded.StartDeck, CardColor.White,5);
+    public static final LeaderCard AZKI = new LeaderCard(Member.Azki, Recorded.StartDeck, CardColor.Green,6);
+    public static final LeaderCard KANATA = new LeaderCard(Member.Kanata, Recorded.BloomingRadiance, CardColor.White,5);
+    public static final LeaderCard MUMEI_BR = new LeaderCard(Member.Mumei, Recorded.BloomingRadiance, CardColor.White,5);
+    public static final LeaderCard AKIROSE = new LeaderCard(Member.Akirose, Recorded.BloomingRadiance, CardColor.Green,5);
+    public static final LeaderCard PEKORA_BR = new LeaderCard(Member.Pekora, Recorded.BloomingRadiance, CardColor.Green,6);
+    public static final LeaderCard LUI = new LeaderCard(Member.Lui, Recorded.BloomingRadiance, CardColor.Red,5);
+    public static final LeaderCard KIARA_BR = new LeaderCard(Member.Kiara, Recorded.BloomingRadiance, CardColor.Red,5);
+    public static final LeaderCard SUISEI_BR = new LeaderCard(Member.Suisei, Recorded.BloomingRadiance, CardColor.Blue,5);
+    public static final LeaderCard KOBO = new LeaderCard(Member.Kobo, Recorded.BloomingRadiance, CardColor.Blue,6);
+    public static final LeaderCard CHOCO = new LeaderCard(Member.Choco, Recorded.StartDeck, CardColor.Purple,5);
+    public static final LeaderCard OKAYU = new LeaderCard(Member.Okayu, Recorded.StartDeck, CardColor.Blue,5);
+    public static final LeaderCard AYAME = new LeaderCard(Member.Ayame, Recorded.StartDeck, CardColor.Red,5);
+    public static final LeaderCard FUBUKI = new LeaderCard(Member.Fubuki, Recorded.QuintetSpectrum, CardColor.White,5);
+    public static final LeaderCard REINE = new LeaderCard(Member.Reine, Recorded.QuintetSpectrum, CardColor.Green,5);
+    public static final LeaderCard MARINE = new LeaderCard(Member.Marine, Recorded.QuintetSpectrum, CardColor.Red,5);
+    public static final LeaderCard CHLOE = new LeaderCard(Member.Chloe, Recorded.QuintetSpectrum, CardColor.Blue,6);
+    public static final LeaderCard SHION = new LeaderCard(Member.Shion, Recorded.QuintetSpectrum, CardColor.Purple,5);
+    public static final LeaderCard OLLIE = new LeaderCard(Member.Ollie, Recorded.QuintetSpectrum, CardColor.Purple,5);
+    public static final LeaderCard CALLI = new LeaderCard(Member.Calli, Recorded.QuintetSpectrum, CardColor.Purple,5);
+    public static final LeaderCard FLARE = new LeaderCard(Member.Flare, Recorded.StartDeck, CardColor.Yellow,5);
+    public static final LeaderCard IROHA = new LeaderCard(Member.Iroha, Recorded.StartDeck, CardColor.Green,5);
+    public static final LeaderCard HAJIME = new LeaderCard(Member.Hajime, Recorded.StartDeck, CardColor.White,5);
+    public static final LeaderCard LUNA = new LeaderCard(Member.Luna, Recorded.EliteSpark, CardColor.White,5);
+    public static final LeaderCard BOTAN = new LeaderCard(Member.Botan, Recorded.EliteSpark, CardColor.Green,5);
+    public static final LeaderCard MIKO = new LeaderCard(Member.Miko, Recorded.EliteSpark, CardColor.Red,5);
+    public static final LeaderCard FUWAMOCO = new LeaderCard(Member.FuwaMoco, Recorded.EliteSpark, CardColor.Blue,5);
+    public static final LeaderCard TOWA = new LeaderCard(Member.Towa, Recorded.EliteSpark, CardColor.Purple,5);
+    public static final LeaderCard KORONE = new LeaderCard(Member.Korone, Recorded.EliteSpark, CardColor.Yellow,6);
+    public static final LeaderCard WATAME = new LeaderCard(Member.Watame, Recorded.EliteSpark, CardColor.Yellow,5);
+    public static final LeaderCard RISU = new LeaderCard(Member.Risu, Recorded.EliteSpark, CardColor.Yellow,5);
 
+<<<<<<< Updated upstream
     public static final YellCard WHITE_YELL = new YellCard(EnumColor.White);
     public static final YellCard GREEN_YELL = new YellCard(EnumColor.Green);
     public static final YellCard RED_YELL = new YellCard(EnumColor.Red);
@@ -462,6 +463,11 @@ public class RegisterCards {
 
 
 
+=======
+    public static final MemberCard SORA_60 = new MemberCard(Member.Sora, Recorded.StartDeck, CardColor.White, CardType.Debut,90);
+    public static final MemberCard MUMEI_90 = new MemberCard(Member.Mumei, Recorded.BloomingRadiance, CardColor.White, CardType.Debut,90);
+    public static final MemberCard MUMEI_60 = new MemberCard(Member.Mumei, Recorded.BloomingRadiance, CardColor.White, CardType.Debut,60);
+>>>>>>> Stashed changes
     public RegisterCards(){
 
 

@@ -1,6 +1,6 @@
 package cardApi;
 
-public enum EnumMemberTag {
+public enum MemberHashTag {
     JP,
     EN,
     ID,

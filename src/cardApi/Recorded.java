@@ -1,6 +1,6 @@
 package cardApi;
 
-public enum EnumRecorded {
+public enum Recorded {
     StartDeck,
     BloomingRadiance,
     QuintetSpectrum,

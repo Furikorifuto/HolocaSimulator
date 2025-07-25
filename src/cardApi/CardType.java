@@ -1,6 +1,6 @@
 package cardApi;
 
-public enum EnumCardType {
+public enum CardType {
     Leader,
     Debut,
     First,

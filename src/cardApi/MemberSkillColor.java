@@ -1,6 +1,6 @@
 package cardApi;
 
-public enum EnumCost {
+public enum MemberSkillColor {
     None,
     Any,
     White,
